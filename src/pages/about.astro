@@ -1,63 +1,59 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
+import ProfileImage from '../assets/profile.jpg';
 import Layout from '../layouts/BlogPost.astro';
 ---
 
 <Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
+	title="关于我"
+	description="李会旺的个人介绍"
+	pubDate={new Date('2024-05-20')}
+	heroImage={ProfileImage}
 >
 	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+		你好，我是李会旺，一名全栈软件工程师，主要技术栈是 Node.js 和 React，目前也在持续关注 AI
+		应用、自动化工具和独立产品构建。
 	</p>
-
 	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
+		我有 7 年开发经验，先后在爱康国宾和 Authing 工作过，做过身份系统、权限模型、工作流、同步中心、
+		审计日志、小程序、互联网医院等产品，也一直在尝试把工程经验和新技术结合到实际项目里。
 	</p>
-
+	<h2>个人信息</h2>
+	<ul>
+		<li>姓名：李会旺</li>
+		<li>城市：北京或远程</li>
+		<li>职位：软件工程师</li>
+		<li>微信 / 手机：13832246076</li>
+		<li>Email：<a href="mailto:seolhw@qq.com">seolhw@qq.com</a></li>
+		<li>GitHub：<a href="https://github.com/seolhw" target="_blank" rel="noreferrer">github.com/seolhw</a></li>
+	</ul>
+	<h2>职业经历</h2>
+	<ul>
+		<li>2021.12 - 2024.05，Authing，研发工程师 / 交付工程师</li>
+		<li>负责过 ARN 权限模型、Pipeline 流水线、LDAP/AD 身份源、身份自动化工作流、函数管理、同步中心、审计日志等项目</li>
+		<li>2019.06 - 2021.11，爱康国宾，研发工程师</li>
+		<li>参与过导检小程序、互联网医院、健康商城、体检云系统等项目</li>
+	</ul>
+	<h2>技术栈</h2>
+	<ul>
+		<li>编程语言：TypeScript、JavaScript、Node.js、React、Next.js、NestJS，也会一些 Java 和 Go</li>
+		<li>中间件：PostgreSQL、MySQL、MongoDB、Redis、Elasticsearch、Kafka、S3/MinIO</li>
+		<li>工程实践：RESTful、Swagger/OpenAPI、事件驱动、分层架构、微服务、领域驱动设计</li>
+		<li>AI 工具：ChatGPT、Kimi、Llama、Qwen、Gemma、文心一言</li>
+		<li>云原生：Docker、Kubernetes、DevOps、GitOps、CI/CD、Serverless、FaaS</li>
+	</ul>
+	<h2>开源项目</h2>
 	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+		我做过一个 VS Code 插件 <a href="https://github.com/seolhw/alias-skip" target="_blank" rel="noreferrer">alias-skip</a>，
+		主要解决别名路径跳转问题，累计下载量 6 万+。
 	</p>
-
+	<h2>求职意向</h2>
 	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
+		我希望继续从事 Node.js 方向的研发工作，也对 AI、区块链、社交应用、生产力工具和自动化工具这些方向保持长期兴趣，
+		接受远程工作。
 	</p>
-
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
+	<h2>教育经历</h2>
+	<ul>
+		<li>2021.03 - 2023.07，中国地质大学，计算机科学与技术，本科</li>
+		<li>2015.09 - 2018.06，保定学院，市场营销，专科</li>
+	</ul>
 </Layout>
