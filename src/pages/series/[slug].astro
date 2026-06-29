@@ -41,9 +41,8 @@ const latestPost = posts[posts.length - 1];
   <SeriesDocsShell title={series.title} posts={posts}>
     <article class="series-content">
       <header class="series-header">
-        <p class="series-kicker">系列首页</p>
         <a class="back-link" href="/series">返回系列列表</a>
-        <h1>{series.title}</h1>
+        <h2>{series.title}</h2>
         <p class="series-summary">
           {series.theme} · {posts.length} 篇文章 · {series.status}
         </p>
@@ -107,11 +106,6 @@ const latestPost = posts[posts.length - 1];
     text-transform: uppercase;
   }
 
-  .series-header h1 {
-    margin: 0 0 0.65rem;
-    max-width: 15ch;
-  }
-
   .series-summary {
     margin: 0 0 1rem;
     color: rgb(var(--gray));
@@ -153,7 +147,7 @@ const latestPost = posts[posts.length - 1];
   .empty-note {
     color: rgb(var(--gray));
   }
-  
+
   @media (max-width: 760px) {
     .series-description {
       font-size: 1rem;
