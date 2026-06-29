@@ -13,12 +13,6 @@ const posts = sortPosts({
 
 <BasePage title={`时间线 | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
   <main>
-    <header class="page-heading">
-      <h2>时间线</h2>
-      <p>
-        按发布时间倒序浏览所有文章。相比文章页，这里更适合快速扫读最近一段时间写了什么。
-      </p>
-    </header>
     <ul>
       {
         posts.map((post) => (
@@ -49,14 +43,7 @@ const posts = sortPosts({
   main {
     width: min(calc(100% - 2rem), 860px);
   }
-  .page-heading {
-    margin-bottom: 3rem;
-  }
-  .page-heading p {
-    max-width: 42rem;
-    color: rgb(var(--gray));
-    line-height: 1.9;
-  }
+
   .timeline ul {
     list-style: none;
     padding: 0;
