@@ -9,7 +9,15 @@ import { getSeriesBySlug } from "../data/series";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, updatedDate, series, seriesOrder, topics = [] } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  series,
+  seriesOrder,
+  topics = [],
+} = Astro.props;
 const currentSeries = getSeriesBySlug({ slug: series });
 ---
 
@@ -108,15 +116,21 @@ const currentSeries = getSeriesBySlug({ slug: series });
                 )
               }
             </div>
-            <h1>{title}</h1>
-            <PostMeta series={series} seriesOrder={seriesOrder} topics={topics} />
+            <h2>{title}</h2>
+            <PostMeta
+              series={series}
+              seriesOrder={seriesOrder}
+              topics={topics}
+            />
             {description && <p class="description">{description}</p>}
             {
               currentSeries && (
                 <div class="series-summary">
                   <p>
                     这篇文章收录在系列
-                    <a href={`/series/${currentSeries.slug}/`}>{currentSeries.title}</a>
+                    <a href={`/series/${currentSeries.slug}/`}>
+                      {currentSeries.title}
+                    </a>
                     中。
                   </p>
                   <p>{currentSeries.description}</p>
