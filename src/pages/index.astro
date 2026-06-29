@@ -116,6 +116,12 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
   .recent-posts li {
     border-bottom: 1px solid rgb(var(--gray-light));
   }
+  .series-list li:last-child {
+    border-bottom: none;
+  }
+  .recent-posts li:last-child {
+    border-bottom: none;
+  }
   .series-link,
   .post-link {
     display: block;
