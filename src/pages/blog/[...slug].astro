@@ -1,6 +1,8 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
+import SeriesBlogPost from "../../layouts/SeriesBlogPost.astro";
+import { getSeriesBySlug } from "../../data/series";
 import { getSeriesPosts } from "../../utils/blog";
 
 export async function getStaticPaths() {
@@ -20,13 +22,23 @@ const seriesPosts = post.data.series
       slug: post.data.series,
     })
   : [];
+const currentSeries = getSeriesBySlug({ slug: post.data.series });
+const shouldUseSeriesPost = Boolean(currentSeries && seriesPosts.length > 0);
 ---
 
-<BlogPost
-  {...post.data}
-  currentPostId={post.id}
-  headings={headings}
-  seriesPosts={seriesPosts}
->
-  <Content />
-</BlogPost>
+{
+  shouldUseSeriesPost ? (
+    <SeriesBlogPost
+      {...post.data}
+      currentPostId={post.id}
+      headings={headings}
+      seriesPosts={seriesPosts}
+    >
+      <Content />
+    </SeriesBlogPost>
+  ) : (
+    <BlogPost {...post.data}>
+      <Content />
+    </BlogPost>
+  )
+}
