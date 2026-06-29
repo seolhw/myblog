@@ -1,0 +1,57 @@
+---
+import { getSeriesBySlug } from '../data/series';
+
+interface Props {
+	series?: string;
+	seriesOrder?: number;
+	topics?: string[];
+}
+
+const { series: seriesSlug, seriesOrder, topics = [] } = Astro.props;
+const series = getSeriesBySlug({ slug: seriesSlug });
+---
+
+{
+	(series || topics.length > 0) && (
+		<p class="post-meta">
+			{
+				series && (
+					<a class="series-link" href={`/series/${series.slug}/`}>
+						系列：{series.title}
+						{seriesOrder ? ` · 第 ${seriesOrder} 讲` : ''}
+					</a>
+				)
+			}
+			{
+				topics.length > 0 && (
+					<span class="topics">
+						{series && ' / '}
+						主题：{topics.join(' / ')}
+					</span>
+				)
+			}
+		</p>
+	)
+}
+
+<style>
+	.post-meta {
+		margin: 0 0 0.55rem;
+		font-size: 0.92rem;
+		color: rgb(var(--gray));
+		line-height: 1.7;
+	}
+
+	.series-link {
+		color: rgb(var(--gray));
+		text-decoration: none;
+	}
+
+	.series-link:hover {
+		color: var(--accent-dark);
+	}
+
+	.topics {
+		color: rgb(var(--gray));
+	}
+</style>

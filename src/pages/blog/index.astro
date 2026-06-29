@@ -4,11 +4,14 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
+import PostMeta from '../../components/PostMeta.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getSeriesSummaries, sortPosts } from '../../utils/blog';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = sortPosts({
+	posts: await getCollection('blog'),
+});
+const seriesList = getSeriesSummaries({ posts });
 ---
 
 <!doctype html>
@@ -17,55 +20,79 @@ const posts = (await getCollection('blog')).sort(
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			main {
-				width: 820px;
+				width: 720px;
 			}
 			.page-heading {
-				margin-bottom: 2.5rem;
+				margin-bottom: 3rem;
 			}
 			.page-heading p {
-				max-width: 38rem;
+				max-width: 42rem;
 				color: rgb(var(--gray));
+				line-height: 1.9;
 			}
-			ul {
-				list-style-type: none;
+			.series-overview {
+				margin: 0 0 3rem;
+			}
+			.section-heading {
+				margin-bottom: 1.1rem;
+			}
+			.section-heading h2 {
+				margin: 0 0 0.35rem;
+			}
+			.section-heading p {
+				margin: 0;
+				color: rgb(var(--gray));
+				font-size: 0.98rem;
+			}
+			.series-list,
+			.post-list {
+				list-style: none;
 				margin: 0;
 				padding: 0;
+				border-top: 1px solid rgb(var(--gray-light));
 			}
-			ul li {
-				padding: 1.45rem 0;
+			.series-list li,
+			.post-list li {
 				border-bottom: 1px solid rgb(var(--gray-light));
 			}
-			ul li * {
-				text-decoration: none;
-				transition: color 0.2s ease;
-			}
-			ul li:last-child {
-				border-bottom: none;
-			}
-			ul li a {
+			.series-link,
+			.post-link {
 				display: block;
+				padding: 1.35rem 0;
+				text-decoration: none;
+			}
+			.series-link:hover h3,
+			.post-link:hover .title {
+				color: var(--accent);
+			}
+			.series-link h3 {
+				margin: 0 0 0.35rem;
+				font-size: 1.3rem;
+				line-height: 1.35;
 			}
 			.title {
 				margin: 0 0 0.35rem;
 				color: rgb(var(--black));
 				line-height: 1.35;
-				font-size: 1.35rem;
+				font-size: 1.3rem;
 			}
+			.series-meta,
 			.date {
 				margin: 0 0 0.55rem;
 				color: rgb(var(--gray));
 				font-size: 0.92rem;
 			}
+			.series-description,
 			.description {
 				margin: 0;
 				color: rgb(var(--gray-dark));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date,
-			ul li a:hover .description {
-				color: rgb(var(--accent));
+				line-height: 1.85;
 			}
 			@media (max-width: 720px) {
+				main {
+					width: 100%;
+				}
+				.series-link h3,
 				.title {
 					font-size: 1.18rem;
 				}
@@ -77,15 +104,41 @@ const posts = (await getCollection('blog')).sort(
 		<main>
 			<header class="page-heading">
 				<h1>文章</h1>
-				<p>按发布时间整理的全部文章。这里更偏向长文阅读，所以列表保留标题、日期和摘要，方便先判断再进入正文。</p>
+				<p>按发布时间整理全部文章。这里不强调花哨的视觉模块，而是尽量让你快速扫过标题、时间、系列与摘要，直接进入想读的内容。</p>
 			</header>
+			<section class="series-overview">
+				<div class="section-heading">
+					<h2>系列专题</h2>
+					<p>如果你想连续阅读一个主题，可以先从系列进入。</p>
+				</div>
+				<ul class="series-list">
+					{
+						seriesList.map((series) => (
+							<li>
+								<a class="series-link" href={`/series/${series.slug}/`}>
+									<p class="series-meta">
+										{series.theme} · {series.postCount} 篇文章 · {series.status}
+									</p>
+									<h3>{series.title}</h3>
+									<p class="series-description">{series.description}</p>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
 			<section>
-				<ul>
+				<ul class="post-list">
 					{
 						posts.map((post) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
+								<a class="post-link" href={`/blog/${post.id}/`}>
 									<h4 class="title">{post.data.title}</h4>
+									<PostMeta
+										series={post.data.series}
+										seriesOrder={post.data.seriesOrder}
+										topics={post.data.topics}
+									/>
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
 									</p>
