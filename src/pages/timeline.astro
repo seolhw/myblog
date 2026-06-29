@@ -18,6 +18,9 @@ const posts = sortPosts({
   <head>
     <BaseHead title={`时间线 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
     <style>
+      main.timeline {
+        width: min(calc(100% - 2rem), 860px);
+      }
       .page-heading {
         margin-bottom: 3rem;
       }
@@ -67,6 +70,9 @@ const posts = sortPosts({
         line-height: 1.85;
       }
       @media (max-width: 760px) {
+        main.timeline {
+          width: min(calc(100% - 1.25rem), 860px);
+        }
         .post-meta-row {
           align-items: flex-start;
           flex-direction: column;

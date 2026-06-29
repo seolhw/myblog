@@ -18,6 +18,9 @@ const seriesList = getSeriesSummaries({ posts });
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
+      main {
+        width: min(calc(100% - 2rem), 860px);
+      }
       .page-heading {
         margin-bottom: 3rem;
       }
@@ -73,6 +76,9 @@ const seriesList = getSeriesSummaries({ posts });
         line-height: 1.85;
       }
       @media (max-width: 760px) {
+        main {
+          width: min(calc(100% - 1.25rem), 860px);
+        }
         .series-link h3 {
           font-size: 1.18rem;
         }

@@ -17,6 +17,9 @@ const seriesList = getSeriesSummaries({ posts });
   <head>
     <BaseHead title={`系列 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
     <style>
+      main {
+        width: min(calc(100% - 2rem), 860px);
+      }
       .page-heading {
         margin-bottom: 3rem;
       }
@@ -66,7 +69,9 @@ const seriesList = getSeriesSummaries({ posts });
       }
 
       @media (max-width: 760px) {
-   
+        main {
+          width: min(calc(100% - 1.25rem), 860px);
+        }
         .page-heading {
           margin-bottom: 2.25rem;
         }

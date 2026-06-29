@@ -33,7 +33,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 main {
-  max-width: calc(100% - 2em);
   margin: auto;
 }
 h1,
@@ -140,7 +139,6 @@ li {
     font-size: 17px;
   }
   main {
-    max-width: calc(100% - 1.25rem);
     padding: 2rem 0 3rem;
   }
   h2 {
