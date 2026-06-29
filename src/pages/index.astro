@@ -2,10 +2,9 @@
 import { getCollection } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
-import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
+import PostListItem from "../components/PostListItem.astro";
 import { GITHUB_URL, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import PostMeta from "../components/PostMeta.astro";
 import { getSeriesSummaries, sortPosts } from "../utils/blog";
 
 const allPosts = sortPosts({
@@ -87,30 +86,11 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
       .post-link:hover h3 {
         color: var(--accent);
       }
-      .post-title {
-        margin: 0 0 0.4rem;
-        line-height: 1.35;
-      }
       .series-meta,
-      .post-meta-row .date {
+      .series-description {
         margin: 0;
-        color: rgb(var(--gray));
-        font-size: 0.92rem;
-      }
-      .series-description,
-      .post-description {
-        margin: 0 0 0.8rem;
         color: rgb(var(--gray-dark));
         line-height: 1.85;
-      }
-      .post-meta-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-      }
-      .post-meta-row > :last-child {
-        flex-shrink: 0;
       }
       .read-more {
         margin-top: 1.1rem;
@@ -122,11 +102,6 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
         }
         .hero h1 {
           max-width: none;
-        }
-        .post-meta-row {
-          align-items: flex-start;
-          flex-direction: column;
-          gap: 0.55rem;
         }
       }
     </style>
@@ -177,24 +152,7 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
         </div>
         <ul>
           {
-            posts.map((post) => (
-              <li>
-                <a class="post-link" href={`/blog/${post.id}/`}>
-                  <h3 class="post-title">{post.data.title}</h3>
-                  <p class="post-description">{post.data.description}</p>
-                  <div class="post-meta-row">
-                    <p class="date">
-                      时间：<FormattedDate date={post.data.pubDate} />
-                    </p>
-                    <PostMeta
-                      series={post.data.series}
-                      seriesOrder={post.data.seriesOrder}
-                      topics={post.data.topics}
-                    />
-                  </div>
-                </a>
-              </li>
-            ))
+            posts.map((post) => <PostListItem post={post} titleAs="h3" />)
           }
         </ul>
         <p class="read-more"><a href="/blog">查看全部文章</a></p>

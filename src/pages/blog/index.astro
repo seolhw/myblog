@@ -2,9 +2,8 @@
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import PostMeta from '../../components/PostMeta.astro';
+import PostListItem from '../../components/PostListItem.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 import { getSeriesSummaries, sortPosts } from '../../utils/blog';
 
@@ -70,44 +69,17 @@ const seriesList = getSeriesSummaries({ posts });
 				font-size: 1.3rem;
 				line-height: 1.35;
 			}
-			.title {
-				margin: 0 0 0.35rem;
-				color: rgb(var(--black));
-				line-height: 1.35;
-				font-size: 1.3rem;
-			}
 			.series-meta,
-			.post-meta-row .date {
+			.series-description {
 				margin: 0;
-				color: rgb(var(--gray));
-				font-size: 0.92rem;
-			}
-			.series-description,
-			.description {
-				margin: 0 0 0.8rem;
 				color: rgb(var(--gray-dark));
 				line-height: 1.85;
-			}
-			.post-meta-row {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				gap: 1rem;
-			}
-			.post-meta-row > :last-child {
-				flex-shrink: 0;
 			}
 			@media (max-width: 720px) {
 				main {
 					width: 100%;
 				}
-				.post-meta-row {
-					align-items: flex-start;
-					flex-direction: column;
-					gap: 0.55rem;
-				}
-				.series-link h3,
-				.title {
+				.series-link h3 {
 					font-size: 1.18rem;
 				}
 			}
@@ -144,24 +116,7 @@ const seriesList = getSeriesSummaries({ posts });
 			<section>
 				<ul class="post-list">
 					{
-						posts.map((post) => (
-							<li>
-								<a class="post-link" href={`/blog/${post.id}/`}>
-									<h4 class="title">{post.data.title}</h4>
-									<p class="description">{post.data.description}</p>
-									<div class="post-meta-row">
-										<p class="date">
-											时间：<FormattedDate date={post.data.pubDate} />
-										</p>
-										<PostMeta
-											series={post.data.series}
-											seriesOrder={post.data.seriesOrder}
-											topics={post.data.topics}
-										/>
-									</div>
-								</a>
-							</li>
-						))
+						posts.map((post) => <PostListItem post={post} titleAs="h4" />)
 					}
 				</ul>
 			</section>

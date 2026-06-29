@@ -1,0 +1,88 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import PostMeta from './PostMeta.astro';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+	titleAs?: 'h2' | 'h3' | 'h4';
+}
+
+const { post, titleAs = 'h3' } = Astro.props;
+const TitleTag = titleAs;
+---
+
+<li class="post-item">
+	<a class="post-link" href={`/blog/${post.id}/`}>
+		<TitleTag class="title">{post.data.title}</TitleTag>
+		<p class="description">{post.data.description}</p>
+		<div class="post-meta-row">
+			<p class="date">
+				时间：<FormattedDate date={post.data.pubDate} />
+			</p>
+			<PostMeta
+				series={post.data.series}
+				seriesOrder={post.data.seriesOrder}
+				topics={post.data.topics}
+			/>
+		</div>
+	</a>
+</li>
+
+<style>
+	.post-item {
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+
+	.post-link {
+		display: block;
+		padding: 1.35rem 0;
+		text-decoration: none;
+	}
+
+	.post-link:hover .title {
+		color: var(--accent);
+	}
+
+	.title {
+		margin: 0 0 0.35rem;
+		color: rgb(var(--black));
+		line-height: 1.35;
+		font-size: 1.3rem;
+	}
+
+	.description {
+		margin: 0 0 0.8rem;
+		color: rgb(var(--gray-dark));
+		line-height: 1.85;
+	}
+
+	.post-meta-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.post-meta-row > :last-child {
+		flex-shrink: 0;
+	}
+
+	.date {
+		margin: 0;
+		color: rgb(var(--gray));
+		font-size: 0.92rem;
+	}
+
+	@media (max-width: 720px) {
+		.title {
+			font-size: 1.18rem;
+		}
+
+		.post-meta-row {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.55rem;
+		}
+	}
+</style>
