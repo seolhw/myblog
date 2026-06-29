@@ -1,37 +1,36 @@
 ---
-import { EMAIL, GITHUB_URL } from '../consts';
+import { EMAIL, GITHUB_URL } from "../consts";
 
-const today = new Date();
 ---
 
 <footer>
-	<p>&copy; {today.getFullYear()} huiwang. 保留所有权利。</p>
-	<div class="links">
-		<a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
-		<a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-		<a href="/rss.xml">RSS</a>
-	</div>
+  <div class="links">
+    <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
+    <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+    <a href="/rss.xml">RSS</a>
+  </div>
 </footer>
 <style>
-	footer {
-		padding: 2.5rem 1rem 4rem;
-		border-top: 1px solid rgba(var(--gray-light), 80%);
-		color: rgb(var(--gray));
-		text-align: center;
-		font-size: 0.95rem;
-	}
-	.links {
-		display: flex;
-		justify-content: center;
-		gap: 1rem;
-		margin-top: 0.75em;
-		flex-wrap: wrap;
-	}
-	.links a {
-		text-decoration: none;
-		color: rgb(var(--gray));
-	}
-	.links a:hover {
-		color: rgb(var(--gray-dark));
-	}
+  footer {
+    padding: 1.1rem 1rem 1.5rem;
+    border-top: 1px solid rgba(var(--gray-light), 80%);
+    color: rgb(var(--gray));
+    text-align: center;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .links {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 0.35rem;
+    flex-wrap: wrap;
+  }
+  .links a {
+    text-decoration: none;
+    color: rgb(var(--gray));
+  }
+  .links a:hover {
+    color: rgb(var(--gray-dark));
+  }
 </style>

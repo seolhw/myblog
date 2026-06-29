@@ -38,7 +38,9 @@ const hasRightSlot = Astro.slots.has("right");
   .series-page-main {
     width: min(calc(100% - 2rem), 1380px);
     margin: auto;
-    padding-top: 2.5rem;
+    height: calc(100vh - 64px - 1rem);
+    padding-top: 1rem;
+    overflow: hidden;
   }
 
   .series-shell {
@@ -46,6 +48,7 @@ const hasRightSlot = Astro.slots.has("right");
     grid-template-columns: 300px minmax(0, 1fr);
     gap: 1.75rem;
     align-items: start;
+    height: 100%;
   }
 
   .series-shell.with-right-sidebar {
@@ -60,16 +63,25 @@ const hasRightSlot = Astro.slots.has("right");
 
   .series-content {
     position: relative;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .series-sidebar {
     padding-right: 1.25rem;
     border-right: 1px solid rgba(var(--gray-light), 0.9);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .toc-sidebar {
     padding-left: 1rem;
     border-left: 1px solid rgba(var(--gray-light), 0.9);
+  }
+
+  .series-sidebar :global(.series-nav) {
+    position: static;
+    top: auto;
   }
 
   @media (max-width: 1180px) {
@@ -86,24 +98,32 @@ const hasRightSlot = Astro.slots.has("right");
   @media (max-width: 980px) {
     .series-page-main {
       width: min(calc(100% - 1.25rem), 1380px);
+      height: auto;
       padding-top: 1rem;
+      overflow: visible;
     }
 
     .series-shell,
     .series-shell.with-right-sidebar {
       grid-template-columns: 1fr;
       gap: 1.5rem;
+      height: auto;
     }
 
     .series-sidebar {
       order: -1;
       padding-right: 0;
       border-right: none;
+      overflow: visible;
     }
 
     .toc-sidebar {
       padding-left: 0;
       border-left: none;
+    }
+
+    .series-content {
+      overflow: visible;
     }
   }
 </style>
