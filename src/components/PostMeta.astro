@@ -13,45 +13,62 @@ const series = getSeriesBySlug({ slug: seriesSlug });
 
 {
 	(series || topics.length > 0) && (
-		<p class="post-meta">
+		<div class="post-meta">
 			{
 				series && (
-					<a class="series-link" href={`/series/${series.slug}/`}>
-						系列：{series.title}
+					<a class="tag tag-series" href={`/series/${series.slug}/`}>
+						系列
 						{seriesOrder ? ` · 第 ${seriesOrder} 讲` : ''}
 					</a>
 				)
 			}
 			{
-				topics.length > 0 && (
-					<span class="topics">
-						{series && ' / '}
-						主题：{topics.join(' / ')}
-					</span>
-				)
+				topics.map((topic) => (
+					<span class="tag tag-topic">{topic}</span>
+				))
 			}
-		</p>
+		</div>
 	)
 }
 
 <style>
 	.post-meta {
-		margin: 0 0 0.55rem;
-		font-size: 0.92rem;
-		color: rgb(var(--gray));
-		line-height: 1.7;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 0.45rem;
+		margin: 0;
 	}
 
-	.series-link {
-		color: rgb(var(--gray));
+	.tag {
+		display: inline-flex;
+		align-items: center;
+		min-height: 1.9rem;
+		padding: 0.1rem 0.62rem;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.8);
+		color: rgb(var(--gray-dark));
 		text-decoration: none;
+		font-size: 0.82rem;
+		line-height: 1.2;
+		white-space: nowrap;
 	}
 
-	.series-link:hover {
+	.tag-series {
+		border-color: rgba(0, 111, 106, 0.18);
+		background: rgba(0, 111, 106, 0.06);
 		color: var(--accent-dark);
 	}
 
-	.topics {
-		color: rgb(var(--gray));
+	.tag-series:hover {
+		border-color: rgba(0, 111, 106, 0.28);
+		background: rgba(0, 111, 106, 0.1);
+	}
+
+	@media (max-width: 720px) {
+		.post-meta {
+			justify-content: flex-start;
+		}
 	}
 </style>

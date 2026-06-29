@@ -77,20 +77,34 @@ const seriesList = getSeriesSummaries({ posts });
 				font-size: 1.3rem;
 			}
 			.series-meta,
-			.date {
-				margin: 0 0 0.55rem;
+			.post-meta-row .date {
+				margin: 0;
 				color: rgb(var(--gray));
 				font-size: 0.92rem;
 			}
 			.series-description,
 			.description {
-				margin: 0;
+				margin: 0 0 0.8rem;
 				color: rgb(var(--gray-dark));
 				line-height: 1.85;
+			}
+			.post-meta-row {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 1rem;
+			}
+			.post-meta-row > :last-child {
+				flex-shrink: 0;
 			}
 			@media (max-width: 720px) {
 				main {
 					width: 100%;
+				}
+				.post-meta-row {
+					align-items: flex-start;
+					flex-direction: column;
+					gap: 0.55rem;
 				}
 				.series-link h3,
 				.title {
@@ -134,15 +148,17 @@ const seriesList = getSeriesSummaries({ posts });
 							<li>
 								<a class="post-link" href={`/blog/${post.id}/`}>
 									<h4 class="title">{post.data.title}</h4>
-									<PostMeta
-										series={post.data.series}
-										seriesOrder={post.data.seriesOrder}
-										topics={post.data.topics}
-									/>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
 									<p class="description">{post.data.description}</p>
+									<div class="post-meta-row">
+										<p class="date">
+											时间：<FormattedDate date={post.data.pubDate} />
+										</p>
+										<PostMeta
+											series={post.data.series}
+											seriesOrder={post.data.seriesOrder}
+											topics={post.data.topics}
+										/>
+									</div>
 								</a>
 							</li>
 						))

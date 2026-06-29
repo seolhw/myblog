@@ -50,19 +50,33 @@ const posts = sortPosts({
 			.timeline .post-link:hover h3 {
 				color: var(--accent);
 			}
-			.date {
-				margin: 0 0 0.45rem;
+			.post-meta-row {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 1rem;
+			}
+			.post-meta-row > :last-child {
+				flex-shrink: 0;
+			}
+			.post-meta-row .date {
+				margin: 0;
 				color: rgb(var(--gray));
 				font-size: 0.92rem;
 			}
 			.description {
-				margin: 0;
+				margin: 0 0 0.8rem;
 				color: rgb(var(--gray-dark));
 				line-height: 1.85;
 			}
 			@media (max-width: 720px) {
 				main {
 					width: 100%;
+				}
+				.post-meta-row {
+					align-items: flex-start;
+					flex-direction: column;
+					gap: 0.55rem;
 				}
 				.timeline h3 {
 					font-size: 1.18rem;
@@ -83,15 +97,17 @@ const posts = sortPosts({
 						<li>
 							<a class="post-link" href={`/blog/${post.id}/`}>
 								<h3>{post.data.title}</h3>
-								<PostMeta
-									series={post.data.series}
-									seriesOrder={post.data.seriesOrder}
-									topics={post.data.topics}
-								/>
-								<p class="date">
-									<FormattedDate date={post.data.pubDate} />
-								</p>
 								<p class="description">{post.data.description}</p>
+								<div class="post-meta-row">
+									<p class="date">
+										时间：<FormattedDate date={post.data.pubDate} />
+									</p>
+									<PostMeta
+										series={post.data.series}
+										seriesOrder={post.data.seriesOrder}
+										topics={post.data.topics}
+									/>
+								</div>
 							</a>
 						</li>
 					))

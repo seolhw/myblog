@@ -40,7 +40,7 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
       }
       .hero-links {
         margin: 0.15rem 0 0;
-        font-size: 0.95rem;
+        font-size: 1rem;
         color: rgb(var(--gray));
       }
       .hero-links a {
@@ -87,17 +87,30 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
       .post-link:hover h3 {
         color: var(--accent);
       }
+      .post-title {
+        margin: 0 0 0.4rem;
+        line-height: 1.35;
+      }
       .series-meta,
-      .date {
-        margin: 0 0 0.45rem;
+      .post-meta-row .date {
+        margin: 0;
         color: rgb(var(--gray));
         font-size: 0.92rem;
       }
       .series-description,
       .post-description {
-        margin: 0;
+        margin: 0 0 0.8rem;
         color: rgb(var(--gray-dark));
         line-height: 1.85;
+      }
+      .post-meta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .post-meta-row > :last-child {
+        flex-shrink: 0;
       }
       .read-more {
         margin-top: 1.1rem;
@@ -109,6 +122,11 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
         }
         .hero h1 {
           max-width: none;
+        }
+        .post-meta-row {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 0.55rem;
         }
       }
     </style>
@@ -124,10 +142,10 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
           和独立产品构建。
         </p>
         <p>
-          这里主要记录 AI Agent、软件工程与产品实践。我更希望首页像一份简洁的阅读入口，而不是一个堆满模块的展示页。
+          这里主要记录 AI Agent、软件工程与产品实践。
         </p>
         <p class="hero-links">
-          <a href="/blog">文章</a> / <a href="/series">系列</a> / <a href="/timeline">时间线</a> / <a href="/about">关于</a> /
+          <a href="/blog">文章</a> / <a href="/series">系列</a> / <a href="/timeline">时间线</a> / <a href="/about">关于</a> /&nbsp;
           <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
         </p>
       </section>
@@ -162,16 +180,18 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
             posts.map((post) => (
               <li>
                 <a class="post-link" href={`/blog/${post.id}/`}>
-                  <h3>{post.data.title}</h3>
-                  <PostMeta
-                    series={post.data.series}
-                    seriesOrder={post.data.seriesOrder}
-                    topics={post.data.topics}
-                  />
-                  <p class="date">
-                    <FormattedDate date={post.data.pubDate} />
-                  </p>
+                  <h3 class="post-title">{post.data.title}</h3>
                   <p class="post-description">{post.data.description}</p>
+                  <div class="post-meta-row">
+                    <p class="date">
+                      时间：<FormattedDate date={post.data.pubDate} />
+                    </p>
+                    <PostMeta
+                      series={post.data.series}
+                      seriesOrder={post.data.seriesOrder}
+                      topics={post.data.topics}
+                    />
+                  </div>
                 </a>
               </li>
             ))
