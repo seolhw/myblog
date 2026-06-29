@@ -1,0 +1,94 @@
+---
+import type { CollectionEntry } from "astro:content";
+import SeriesPostNav from "./SeriesPostNav.astro";
+
+interface Props {
+  title: string;
+  posts: CollectionEntry<"blog">[];
+  currentPostId?: string;
+}
+
+const { title, posts, currentPostId } = Astro.props;
+const hasRightSlot = Astro.slots.has("right");
+---
+
+<div class="series-page-main">
+  <div class:list={["series-shell", { "with-right-sidebar": hasRightSlot }]}>
+    <aside class="series-sidebar">
+      <SeriesPostNav
+        title={title}
+        posts={posts}
+        currentPostId={currentPostId}
+      />
+    </aside>
+    <section class="series-content">
+      <slot />
+    </section>
+    {
+      hasRightSlot && (
+        <aside class="toc-sidebar">
+          <slot name="right" />
+        </aside>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .series-page-main {
+    width: 1380px;
+    max-width: none;
+    margin: auto;
+    padding-top: 2.5rem;
+  }
+
+  .series-shell {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 2.25rem;
+    align-items: start;
+  }
+
+  .series-shell.with-right-sidebar {
+    grid-template-columns: 260px minmax(0, 720px) 220px;
+  }
+
+  .series-sidebar,
+  .series-content,
+  .toc-sidebar {
+    min-width: 0;
+  }
+
+  .series-content {
+    position: relative;
+  }
+
+  @media (max-width: 1180px) {
+    .series-page-main {
+      width: min(100% - 1.5rem, 1040px);
+    }
+
+    .series-shell.with-right-sidebar {
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 1.8rem;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .series-page-main {
+      width: 100%;
+      max-width: calc(100% - 1.25rem);
+      padding-top: 1rem;
+    }
+
+    .series-shell,
+    .series-shell.with-right-sidebar {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .series-sidebar {
+      order: -1;
+    }
+  }
+</style>

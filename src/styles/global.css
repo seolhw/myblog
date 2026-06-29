@@ -33,7 +33,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 main {
-  width: 760px;
   max-width: calc(100% - 2em);
   margin: auto;
 }

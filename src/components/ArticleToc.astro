@@ -1,0 +1,84 @@
+---
+interface HeadingItem {
+	depth: number;
+	slug: string;
+	text: string;
+}
+
+interface Props {
+	headings: HeadingItem[];
+}
+
+const { headings } = Astro.props;
+const tocHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
+---
+
+{
+	tocHeadings.length > 0 && (
+		<div class="article-toc">
+			<p class="eyebrow">本页目录</p>
+			<ul>
+				{
+					tocHeadings.map((heading) => (
+						<li class:list={[`depth-${heading.depth}`]}>
+							<a href={`#${heading.slug}`}>{heading.text}</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	)
+}
+
+<style>
+	.article-toc {
+		position: sticky;
+		top: 5.5rem;
+		padding: 1rem 0.95rem;
+		border: 1px solid rgba(var(--gray-light), 0.9);
+		border-radius: 16px;
+		background: rgba(255, 255, 255, 0.72);
+		backdrop-filter: blur(10px);
+	}
+
+	.eyebrow {
+		margin: 0 0 0.7rem;
+		color: rgb(var(--gray));
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	li + li {
+		margin-top: 0.35rem;
+	}
+
+	li.depth-3 {
+		padding-left: 0.85rem;
+	}
+
+	a {
+		color: rgb(var(--gray));
+		text-decoration: none;
+		font-size: 0.9rem;
+		line-height: 1.55;
+		transition: color 0.2s ease;
+	}
+
+	a:hover {
+		color: var(--accent-dark);
+	}
+
+	@media (max-width: 1180px) {
+		.article-toc {
+			display: none;
+		}
+	}
+</style>
