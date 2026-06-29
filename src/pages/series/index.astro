@@ -12,12 +12,6 @@ const seriesList = getSeriesSummaries({ posts });
 
 <BasePage title={`系列 | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
   <main>
-    <header class="page-heading">
-      <h2>系列</h2>
-      <p>
-        这里集中展示当前正在写、已经规划或持续更新中的专题系列。页面结构尽量克制，优先帮助你找到值得进入的长文目录。
-      </p>
-    </header>
     <ul class="series-list">
       {
         seriesList.map((series) => (
@@ -38,15 +32,6 @@ const seriesList = getSeriesSummaries({ posts });
 <style>
   main {
     width: min(calc(100% - 2rem), 860px);
-  }
-  .page-heading {
-    margin-bottom: 3rem;
-  }
-
-  .page-heading p {
-    max-width: 42rem;
-    color: rgb(var(--gray));
-    line-height: 1.9;
   }
 
   .series-list {

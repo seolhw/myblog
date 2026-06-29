@@ -13,12 +13,6 @@ const seriesList = getSeriesSummaries({ posts });
 
 <BasePage title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <main>
-    <header class="page-heading">
-      <h2>文章</h2>
-      <p>
-        按发布时间整理全部文章。这里不强调花哨的视觉模块，而是尽量让你快速扫过标题、时间、系列与摘要，直接进入想读的内容。
-      </p>
-    </header>
     <section class="series-overview">
       <div class="section-heading">
         <h2>系列专题</h2>
@@ -52,16 +46,10 @@ const seriesList = getSeriesSummaries({ posts });
   main {
     width: min(calc(100% - 2rem), 860px);
   }
-  .page-heading {
-    margin-bottom: 3rem;
-  }
-  .page-heading p {
-    max-width: 42rem;
-    color: rgb(var(--gray));
-    line-height: 1.9;
-  }
+
   .series-overview {
-    margin: 0 0 3rem;
+    margin-bottom: 3rem;
+    margin-top: 1rem;
   }
   .section-heading {
     margin-bottom: 1.1rem;
