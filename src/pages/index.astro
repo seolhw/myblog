@@ -1,8 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
+import BasePage from "../layouts/BasePage.astro";
 import PostListItem from "../components/PostListItem.astro";
 import { GITHUB_URL, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { getSeriesSummaries, sortPosts } from "../utils/blog";
@@ -14,142 +12,138 @@ const posts = allPosts.slice(0, 5);
 const seriesList = getSeriesSummaries({ posts: allPosts });
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style>
-      main {
-        width: min(calc(100% - 2rem), 860px);
-      }
-      .hero {
-        display: grid;
-        gap: 1rem;
-        padding: 1rem 0 0;
-      }
-
-      .hero p {
-        max-width: 44rem;
-        margin: 0;
-        color: rgb(var(--gray-dark));
-        line-height: 1.9;
-      }
-      .hero-links {
-        margin: 0.15rem 0 0;
-        font-size: 1rem;
-        color: rgb(var(--gray));
-      }
-      .hero-links a {
-        text-decoration: none;
-      }
-      .series-section,
-      .recent-posts {
-        margin-top: 3.5rem;
-      }
-      .section-heading {
-        margin-bottom: 1.1rem;
-      }
-      .section-heading h2 {
-        margin: 0 0 0.35rem;
-      }
-      .section-heading p {
-        margin: 0;
-        color: rgb(var(--gray));
-        font-size: 0.98rem;
-      }
-      .series-list,
-      .recent-posts ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        border-top: 1px solid rgb(var(--gray-light));
-      }
-      .series-list li,
-      .recent-posts li {
-        border-bottom: 1px solid rgb(var(--gray-light));
-      }
-      .series-link,
-      .post-link {
-        display: block;
-        padding: 1.35rem 0;
-        text-decoration: none;
-      }
-      .series-link h3,
-      .post-link h3 {
-        margin: 0 0 0.35rem;
-        line-height: 1.35;
-      }
-      .series-link:hover h3,
-      .post-link:hover h3 {
-        color: var(--accent);
-      }
-      .series-meta,
-      .series-description {
-        margin: 0;
-        color: rgb(var(--gray-dark));
-        line-height: 1.85;
-      }
-      .read-more {
-        margin-top: 1.1rem;
-        font-size: 0.95rem;
-      }
-      @media (max-width: 760px) {
-        main {
-          width: min(calc(100% - 1.25rem), 860px);
+<BasePage
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+>
+  <main>
+    <section class="hero">
+      <h2>你好，我是 huiwang</h2>
+      <p>
+        全栈软件工程师，AI Agent 工程师，主要关注 TypeScript、Node.js、React、
+        <strong>AI Agent</strong>
+        和独立产品构建。
+      </p>
+      <p>这里主要记录 AI Agent、软件工程与产品实践。</p>
+      <p class="hero-links">
+        <a href="/blog">文章</a> / <a href="/series">系列</a> / <a
+          href="/timeline">时间线</a
+        > / <a href="/about">关于</a> /&nbsp;
+        <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
+      </p>
+    </section>
+    <section class="series-section">
+      <div class="section-heading">
+        <h2>系列</h2>
+        <p>适合连续阅读的专题内容，按主题组织。</p>
+      </div>
+      <ul class="series-list">
+        {
+          seriesList.map((series) => (
+            <li>
+              <a class="series-link" href={`/series/${series.slug}/`}>
+                <p class="series-meta">
+                  {series.theme} · {series.postCount} 篇文章 · {series.status}
+                </p>
+                <h3>{series.title}</h3>
+                <p class="series-description">{series.description}</p>
+              </a>
+            </li>
+          ))
         }
-      }
-    </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <section class="hero">
-        <h2>你好，我是 huiwang</h2>
-        <p>
-          全栈软件工程师，AI Agent 工程师，主要关注 TypeScript、Node.js、React、
-          <strong>AI Agent</strong>
-          和独立产品构建。
-        </p>
-        <p>这里主要记录 AI Agent、软件工程与产品实践。</p>
-        <p class="hero-links">
-          <a href="/blog">文章</a> / <a href="/series">系列</a> / <a
-            href="/timeline">时间线</a
-          > / <a href="/about">关于</a> /&nbsp;
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
-        </p>
-      </section>
-      <section class="series-section">
-        <div class="section-heading">
-          <h2>系列</h2>
-          <p>适合连续阅读的专题内容，按主题组织。</p>
-        </div>
-        <ul class="series-list">
-          {
-            seriesList.map((series) => (
-              <li>
-                <a class="series-link" href={`/series/${series.slug}/`}>
-                  <p class="series-meta">
-                    {series.theme} · {series.postCount} 篇文章 · {series.status}
-                  </p>
-                  <h3>{series.title}</h3>
-                  <p class="series-description">{series.description}</p>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-      <section class="recent-posts">
-        <div class="section-heading">
-          <h2>最近更新</h2>
-          <p>按时间倒序，先看标题和摘要，再决定是否进入正文。</p>
-        </div>
-        <ul>
-          {posts.map((post) => <PostListItem post={post} titleAs="h3" />)}
-        </ul>
-        <p class="read-more"><a href="/blog">查看全部文章</a></p>
-      </section>
-    </main>
-    <Footer />
-  </body>
-</html>
+      </ul>
+    </section>
+    <section class="recent-posts">
+      <div class="section-heading">
+        <h2>最近更新</h2>
+        <p>按时间倒序，先看标题和摘要，再决定是否进入正文。</p>
+      </div>
+      <ul>
+        {posts.map((post) => <PostListItem post={post} titleAs="h3" />)}
+      </ul>
+      <p class="read-more"><a href="/blog">查看全部文章</a></p>
+    </section>
+  </main>
+</BasePage>
+
+<style>
+  main {
+    width: min(calc(100% - 2rem), 860px);
+  }
+  .hero {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem 0 0;
+  }
+
+  .hero p {
+    max-width: 44rem;
+    margin: 0;
+    color: rgb(var(--gray-dark));
+    line-height: 1.9;
+  }
+  .hero-links {
+    margin: 0.15rem 0 0;
+    font-size: 1rem;
+    color: rgb(var(--gray));
+  }
+  .hero-links a {
+    text-decoration: none;
+  }
+  .series-section,
+  .recent-posts {
+    margin-top: 3.5rem;
+  }
+  .section-heading {
+    margin-bottom: 1.1rem;
+  }
+  .section-heading h2 {
+    margin: 0 0 0.35rem;
+  }
+  .section-heading p {
+    margin: 0;
+    color: rgb(var(--gray));
+    font-size: 0.98rem;
+  }
+  .series-list,
+  .recent-posts ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid rgb(var(--gray-light));
+  }
+  .series-list li,
+  .recent-posts li {
+    border-bottom: 1px solid rgb(var(--gray-light));
+  }
+  .series-link,
+  .post-link {
+    display: block;
+    padding: 1.35rem 0;
+    text-decoration: none;
+  }
+  .series-link h3,
+  .post-link h3 {
+    margin: 0 0 0.35rem;
+    line-height: 1.35;
+  }
+  .series-link:hover h3,
+  .post-link:hover h3 {
+    color: var(--accent);
+  }
+  .series-meta,
+  .series-description {
+    margin: 0;
+    color: rgb(var(--gray-dark));
+    line-height: 1.85;
+  }
+  .read-more {
+    margin-top: 1.1rem;
+    font-size: 0.95rem;
+  }
+  @media (max-width: 760px) {
+    main {
+      width: min(calc(100% - 1.25rem), 860px);
+    }
+  }
+</style>

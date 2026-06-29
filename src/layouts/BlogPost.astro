@@ -1,11 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
-import Header from "../components/Header.astro";
 import ArticleToc from "../components/ArticleToc.astro";
 import PostMeta from "../components/PostMeta.astro";
+import BasePage from "./BasePage.astro";
 import SeriesDocsShell from "../components/SeriesDocsShell.astro";
 import { getSeriesBySlug } from "../data/series";
 
@@ -37,178 +35,171 @@ const currentSeries = getSeriesBySlug({ slug: series });
 const hasSeriesLayout = Boolean(currentSeries && seriesPosts.length > 0);
 ---
 
-<html lang="zh-CN">
-  <head>
-    <BaseHead title={title} description={description} />
-    <style>
-      .page-main {
-        width: min(calc(100% - 1.25rem), 680px);
-        margin: auto;
-        padding-top: 2.5rem;
-      }
-      .prose {
-        width: 100%;
-        padding: 0 0 4.5rem;
-        color: rgb(var(--gray-dark));
-      }
-      .title {
-        margin-bottom: 2.5rem;
-        padding: 1rem 0 0;
-        text-align: left;
-        line-height: 1.3;
-      }
-      .series-kicker {
-        margin: 0 0 0.6rem;
-        color: rgb(var(--gray));
-        font-size: 0.84rem;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-      }
-      .title h1 {
-        margin: 0 0 0.75rem;
-      }
-      .date {
-        margin-bottom: 0.65rem;
-        color: rgb(var(--gray));
-        font-size: 0.95rem;
-      }
-      .last-updated-on {
-        display: inline;
-        margin-left: 0.5rem;
-      }
-      .description {
-        max-width: 42rem;
-        margin-bottom: 1rem;
-        color: rgb(var(--gray));
-        font-size: 1.06rem;
-        line-height: 1.9;
-      }
-      .series-summary {
-        margin: 0 0 1rem;
-        padding-left: 1rem;
-        border-left: 2px solid rgb(var(--gray-light));
-        color: rgb(var(--gray));
-      }
-      .series-summary p {
-        margin: 0 0 0.45rem;
-      }
-      .series-summary p:last-child {
-        margin-bottom: 0;
-      }
-      .prose :global(h2) {
-        margin-top: 3rem;
-      }
-      .prose :global(p),
-      .prose :global(li) {
-        line-height: 1.95;
-      }
-      .prose :global(blockquote) {
-        margin: 2rem 0;
-      }
-      @media (max-width: 980px) {
-        .page-main {
-          width: min(calc(100% - 1.25rem), 680px);
-          padding-top: 1rem;
-        }
-      }
-      @media (max-width: 760px) {
-        .prose {
-          padding-bottom: 3rem;
-        }
-        .last-updated-on {
-          display: block;
-          margin: 0.2rem 0 0;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <Header />
-    <main class:list={{ "page-main": !hasSeriesLayout }}>
-      {
-        hasSeriesLayout ? (
-          <SeriesDocsShell
-            title={currentSeries?.title || ""}
-            posts={seriesPosts}
-            currentPostId={currentPostId}
-          >
-            <div class="prose">
-              <div class="title">
-                <p class="series-kicker">系列文章</p>
-                <div class="date">
-                  <FormattedDate date={pubDate} />
-                  {updatedDate && (
-                    <div class="last-updated-on">
-                      最后更新于 <FormattedDate date={updatedDate} />
-                    </div>
-                  )}
-                </div>
-                <h1>{title}</h1>
-                <PostMeta
-                  series={series}
-                  seriesOrder={seriesOrder}
-                  topics={topics}
-                />
-                {description && <p class="description">{description}</p>}
+<BasePage title={title} description={description}>
+  <main>
+    {
+      hasSeriesLayout ? (
+        <SeriesDocsShell
+          title={currentSeries?.title || ""}
+          posts={seriesPosts}
+          currentPostId={currentPostId}
+        >
+          <div class="prose">
+            <div class="title">
+              <p class="series-kicker">系列文章</p>
+              <div class="date">
+                <FormattedDate date={pubDate} />
+                {updatedDate && (
+                  <div class="last-updated-on">
+                    最后更新于 <FormattedDate date={updatedDate} />
+                  </div>
+                )}
+              </div>
+              <h1>{title}</h1>
+              <PostMeta
+                series={series}
+                seriesOrder={seriesOrder}
+                topics={topics}
+              />
+              {description && <p class="description">{description}</p>}
+              <div class="series-summary">
+                <p>
+                  这篇文章收录在系列
+                  <a href={`/series/${currentSeries?.slug || ""}/`}>
+                    {currentSeries?.title}
+                  </a>
+                  中。
+                </p>
+                <p>{currentSeries?.description}</p>
+              </div>
+              <hr />
+            </div>
+            <slot />
+          </div>
+          <Fragment slot="right">
+            <ArticleToc headings={headings} />
+          </Fragment>
+        </SeriesDocsShell>
+      ) : (
+        <article>
+          <div class="prose">
+            <div class="title">
+              <div class="date">
+                <FormattedDate date={pubDate} />
+                {updatedDate && (
+                  <div class="last-updated-on">
+                    最后更新于 <FormattedDate date={updatedDate} />
+                  </div>
+                )}
+              </div>
+              <h1>{title}</h1>
+              <PostMeta
+                series={series}
+                seriesOrder={seriesOrder}
+                topics={topics}
+              />
+              {description && <p class="description">{description}</p>}
+              {currentSeries && (
                 <div class="series-summary">
                   <p>
                     这篇文章收录在系列
-                    <a href={`/series/${currentSeries?.slug || ""}/`}>
-                      {currentSeries?.title}
+                    <a href={`/series/${currentSeries.slug}/`}>
+                      {currentSeries.title}
                     </a>
                     中。
                   </p>
-                  <p>{currentSeries?.description}</p>
+                  <p>{currentSeries.description}</p>
                 </div>
-                <hr />
-              </div>
-              <slot />
+              )}
+              <hr />
             </div>
-            <Fragment slot="right">
-              <ArticleToc headings={headings} />
-            </Fragment>
-          </SeriesDocsShell>
-        ) : (
-          <article>
-            <div class="prose">
-              <div class="title">
-                <div class="date">
-                  <FormattedDate date={pubDate} />
-                  {updatedDate && (
-                    <div class="last-updated-on">
-                      最后更新于 <FormattedDate date={updatedDate} />
-                    </div>
-                  )}
-                </div>
-                <h1>{title}</h1>
-                <PostMeta
-                  series={series}
-                  seriesOrder={seriesOrder}
-                  topics={topics}
-                />
-                {description && <p class="description">{description}</p>}
-                {currentSeries && (
-                  <div class="series-summary">
-                    <p>
-                      这篇文章收录在系列
-                      <a href={`/series/${currentSeries.slug}/`}>
-                        {currentSeries.title}
-                      </a>
-                      中。
-                    </p>
-                    <p>{currentSeries.description}</p>
-                  </div>
-                )}
-                <hr />
-              </div>
-              <slot />
-            </div>
-          </article>
-        )
-      }
-    </main>
-    <Footer />
-  </body>
-</html>
+            <slot />
+          </div>
+        </article>
+      )
+    }
+  </main>
+</BasePage>
+
+<style>
+  main {
+    width: min(calc(100% - 1.25rem), 680px);
+    margin: auto;
+    padding-top: 2.5rem;
+  }
+  .prose {
+    width: 100%;
+    padding: 0 0 4.5rem;
+    color: rgb(var(--gray-dark));
+  }
+  .title {
+    margin-bottom: 2.5rem;
+    padding: 1rem 0 0;
+    text-align: left;
+    line-height: 1.3;
+  }
+  .series-kicker {
+    margin: 0 0 0.6rem;
+    color: rgb(var(--gray));
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .title h1 {
+    margin: 0 0 0.75rem;
+  }
+  .date {
+    margin-bottom: 0.65rem;
+    color: rgb(var(--gray));
+    font-size: 0.95rem;
+  }
+  .last-updated-on {
+    display: inline;
+    margin-left: 0.5rem;
+  }
+  .description {
+    max-width: 42rem;
+    margin-bottom: 1rem;
+    color: rgb(var(--gray));
+    font-size: 1.06rem;
+    line-height: 1.9;
+  }
+  .series-summary {
+    margin: 0 0 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgb(var(--gray-light));
+    color: rgb(var(--gray));
+  }
+  .series-summary p {
+    margin: 0 0 0.45rem;
+  }
+  .series-summary p:last-child {
+    margin-bottom: 0;
+  }
+  .prose :global(h2) {
+    margin-top: 3rem;
+  }
+  .prose :global(p),
+  .prose :global(li) {
+    line-height: 1.95;
+  }
+  .prose :global(blockquote) {
+    margin: 2rem 0;
+  }
+  @media (max-width: 980px) {
+    .page-main {
+      width: min(calc(100% - 1.25rem), 680px);
+      padding-top: 1rem;
+    }
+  }
+  @media (max-width: 760px) {
+    .prose {
+      padding-bottom: 3rem;
+    }
+    .last-updated-on {
+      display: block;
+      margin: 0.2rem 0 0;
+    }
+  }
+</style>

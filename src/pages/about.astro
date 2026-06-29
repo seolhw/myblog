@@ -1,79 +1,76 @@
 ---
-import ProfileImage from "../assets/profile.jpg";
-import Layout from "../layouts/BlogPost.astro";
+import BasePage from "../layouts/BasePage.astro";
 ---
 
-<Layout
-  title="个人介绍"
-  description="履历，技术栈，开源项目"
-  pubDate={new Date("2024-05-20")}
-  topics={[]}
- >
-  <p>
-    你好，我是 huiwang，一名全栈软件工程师，主要技术栈是 Node.js 和
-    React，目前也在持续关注 AI 应用、自动化工具和独立产品构建。
-  </p>
-  <p>
-    我有 8 年开发经验，先后在爱康国宾和 Authing
-    工作过，做过身份系统、权限模型、工作流、同步中心、
-    审计日志、小程序、互联网医院等产品，也一直在尝试把工程经验和新技术结合到实际项目里。
-  </p>
-  <h2>个人信息</h2>
-  <ul>
-    <li>姓名：huiwang</li>
-    <li>城市：北京或远程</li>
-    <li>职位：软件工程师</li>
-    <li>微信 / 手机：13832246076</li>
-    <li>Email：<a href="mailto:001@huiwang.fun">001@huiwang.fun</a></li>
-    <li>
-      GitHub：<a
-        href="https://github.com/seolhw"
+<BasePage title="个人介绍" description="履历，技术栈，开源项目">
+  <main>
+    <p>
+      你好，我是 huiwang，一名全栈软件工程师，主要技术栈是 Node.js 和
+      React，目前也在持续关注 AI 应用、自动化工具和独立产品构建。
+    </p>
+    <p>
+      我有 8 年开发经验，先后在爱康国宾和 Authing
+      工作过，做过身份系统、权限模型、工作流、同步中心、
+      审计日志、小程序、互联网医院等产品，也一直在尝试把工程经验和新技术结合到实际项目里。
+    </p>
+    <h2>个人信息</h2>
+    <ul>
+      <li>姓名：huiwang</li>
+      <li>城市：北京或远程</li>
+      <li>职位：软件工程师</li>
+      <li>微信 / 手机：13832246076</li>
+      <li>Email：<a href="mailto:001@huiwang.fun">001@huiwang.fun</a></li>
+      <li>
+        GitHub：<a
+          href="https://github.com/seolhw"
+          target="_blank"
+          rel="noreferrer">github.com/seolhw</a
+        >
+      </li>
+    </ul>
+    <h2>职业经历</h2>
+    <ul>
+      <li>2021.12 - 2024.05，Authing，研发工程师</li>
+      <li>
+        负责过 ARN 权限模型、Pipeline 流水线、LDAP/AD
+        身份源、身份自动化工作流、函数管理、同步中心、审计日志等项目
+      </li>
+      <li>2019.06 - 2021.11，爱康国宾，研发工程师</li>
+      <li>参与过导检小程序、互联网医院、健康商城、体检云系统等项目</li>
+    </ul>
+    <h2>技术栈</h2>
+    <ul>
+      <li>
+        编程语言：TypeScript、JavaScript、Node.js、React、Next.js、NestJS，也会一些
+        Java 和 Go
+      </li>
+      <li>
+        中间件：PostgreSQL、MySQL、MongoDB、Redis、Elasticsearch、Kafka、S3/MinIO
+      </li>
+      <li>
+        工程实践：RESTful、Swagger/OpenAPI、事件驱动、分层架构、微服务、领域驱动设计
+      </li>
+      <li>AI 工具：ChatGPT、Kimi、Llama、Qwen、Gemma、文心一言</li>
+      <li>
+        云原生：Docker、Kubernetes、DevOps、GitOps、CI/CD、Serverless、FaaS
+      </li>
+    </ul>
+    <h2>开源项目</h2>
+    <p>
+      我做过一个 VS Code 插件 <a
+        href="https://github.com/seolhw/alias-skip"
         target="_blank"
-        rel="noreferrer">github.com/seolhw</a
-      >
-    </li>
-  </ul>
-  <h2>职业经历</h2>
-  <ul>
-    <li>2021.12 - 2024.05，Authing，研发工程师</li>
-    <li>
-      负责过 ARN 权限模型、Pipeline 流水线、LDAP/AD
-      身份源、身份自动化工作流、函数管理、同步中心、审计日志等项目
-    </li>
-    <li>2019.06 - 2021.11，爱康国宾，研发工程师</li>
-    <li>参与过导检小程序、互联网医院、健康商城、体检云系统等项目</li>
-  </ul>
-  <h2>技术栈</h2>
-  <ul>
-    <li>
-      编程语言：TypeScript、JavaScript、Node.js、React、Next.js、NestJS，也会一些
-      Java 和 Go
-    </li>
-    <li>
-      中间件：PostgreSQL、MySQL、MongoDB、Redis、Elasticsearch、Kafka、S3/MinIO
-    </li>
-    <li>
-      工程实践：RESTful、Swagger/OpenAPI、事件驱动、分层架构、微服务、领域驱动设计
-    </li>
-    <li>AI 工具：ChatGPT、Kimi、Llama、Qwen、Gemma、文心一言</li>
-    <li>云原生：Docker、Kubernetes、DevOps、GitOps、CI/CD、Serverless、FaaS</li>
-  </ul>
-  <h2>开源项目</h2>
-  <p>
-    我做过一个 VS Code 插件 <a
-      href="https://github.com/seolhw/alias-skip"
-      target="_blank"
-      rel="noreferrer">alias-skip</a
-    >， 主要解决别名路径跳转问题，累计下载量 6 万+。
-  </p>
-  <h2>求职意向</h2>
-  <p>
-    我希望继续从事 Node.js 方向的研发工作，也对
-    AI、社交应用、生产力工具和自动化工具这些方向保持长期兴趣，
-    接受远程工作。
-  </p>
-  <h2>教育经历</h2>
-  <ul>
-    <li>2021.03 - 2023.07，中国地质大学，计算机科学与技术，本科</li>
-  </ul>
-</Layout>
+        rel="noreferrer">alias-skip</a
+      >， 主要解决别名路径跳转问题，累计下载量 6 万+。
+    </p>
+    <h2>求职意向</h2>
+    <p>
+      我希望继续从事 Node.js 方向的研发工作，也对
+      AI、社交应用、生产力工具和自动化工具这些方向保持长期兴趣， 接受远程工作。
+    </p>
+    <h2>教育经历</h2>
+    <ul>
+      <li>2021.03 - 2023.07，中国地质大学，计算机科学与技术，本科</li>
+    </ul>
+  </main>
+</BasePage>
