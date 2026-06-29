@@ -42,24 +42,23 @@ const currentSeries = getSeriesBySlug({ slug: series });
   >
     <div class="prose">
       <div class="title">
-        <p class="series-kicker">系列文章</p>
+        <h2>{title}</h2>
         <div class="date">
-          <FormattedDate date={pubDate} />
+          <div>更新于：<FormattedDate date={pubDate} /></div>
           <PostMeta series={series} seriesOrder={seriesOrder} topics={topics} />
         </div>
-        <h2>{title}</h2>
-        {description && <p class="description">{description}</p>}
         <div class="series-summary">
           <p>
-            这篇文章收录在系列
+            这篇文章收录在系列&nbsp;
             <a href={`/series/${currentSeries?.slug || ""}/`}>
               {currentSeries?.title}
             </a>
-            中。
+            &nbsp; 中。
           </p>
           <p>{currentSeries?.description}</p>
         </div>
         <hr />
+        {description && <p class="description">摘要：{description}</p>}
       </div>
       <slot />
     </div>
@@ -70,6 +69,9 @@ const currentSeries = getSeriesBySlug({ slug: series });
 </BasePage>
 
 <style>
+  h2 {
+    margin-bottom: 1rem;
+  }
   .prose {
     width: 100%;
     padding: 0 0 4.5rem;
@@ -77,17 +79,8 @@ const currentSeries = getSeriesBySlug({ slug: series });
   }
   .title {
     margin-bottom: 2.5rem;
-    padding: 1rem 0 0;
     text-align: left;
     line-height: 1.3;
-  }
-  .series-kicker {
-    margin: 0 0 0.6rem;
-    color: rgb(var(--gray));
-    font-size: 0.84rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
   }
 
   .date {
@@ -120,16 +113,7 @@ const currentSeries = getSeriesBySlug({ slug: series });
   .series-summary p:last-child {
     margin-bottom: 0;
   }
-  .prose :global(h2) {
-    margin-top: 3rem;
-  }
-  .prose :global(p),
-  .prose :global(li) {
-    line-height: 1.95;
-  }
-  .prose :global(blockquote) {
-    margin: 2rem 0;
-  }
+
   @media (max-width: 760px) {
     .prose {
       padding-bottom: 3rem;
