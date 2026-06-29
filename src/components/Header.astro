@@ -15,6 +15,7 @@ import { Image } from "astro:assets";
     <div class="internal-links">
       <HeaderLink href="/">首页</HeaderLink>
       <HeaderLink href="/blog">文章</HeaderLink>
+      <HeaderLink href="/series">系列</HeaderLink>
       {
         SERIES_LIST.slice(0, 3).map((series) => (
           <HeaderLink href={`/series/${series.slug}`}>{series.title}</HeaderLink>
