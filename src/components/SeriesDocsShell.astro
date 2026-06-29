@@ -44,7 +44,7 @@ const hasRightSlot = Astro.slots.has("right");
   .series-shell {
     display: grid;
     grid-template-columns: 280px minmax(0, 1fr);
-    gap: 2rem;
+    gap: 1.75rem;
     align-items: start;
   }
 
@@ -60,6 +60,16 @@ const hasRightSlot = Astro.slots.has("right");
 
   .series-content {
     position: relative;
+  }
+
+  .series-sidebar {
+    padding-right: 1.25rem;
+    border-right: 1px solid rgba(var(--gray-light), 0.9);
+  }
+
+  .toc-sidebar {
+    padding-left: 1rem;
+    border-left: 1px solid rgba(var(--gray-light), 0.9);
   }
 
   @media (max-width: 1180px) {
@@ -87,6 +97,13 @@ const hasRightSlot = Astro.slots.has("right");
 
     .series-sidebar {
       order: -1;
+      padding-right: 0;
+      border-right: none;
+    }
+
+    .toc-sidebar {
+      padding-left: 0;
+      border-left: none;
     }
   }
 </style>

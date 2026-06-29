@@ -38,86 +38,55 @@ const latestPost = posts[posts.length - 1];
   title={`${series.title} | ${SITE_TITLE}`}
   description={series.description}
 >
-  <main>
-    <SeriesDocsShell title={series.title} posts={posts}>
-      <article class="series-content">
-        <header class="series-header">
-          <p class="series-kicker">系列首页</p>
-          <a class="back-link" href="/series">返回系列列表</a>
-          <h1>{series.title}</h1>
-          <p class="series-summary">
-            {series.theme} · {posts.length} 篇文章 · {series.status}
-          </p>
-          <p class="series-description">{series.description}</p>
-        </header>
+  <SeriesDocsShell title={series.title} posts={posts}>
+    <article class="series-content">
+      <header class="series-header">
+        <p class="series-kicker">系列首页</p>
+        <a class="back-link" href="/series">返回系列列表</a>
+        <h1>{series.title}</h1>
+        <p class="series-summary">
+          {series.theme} · {posts.length} 篇文章 · {series.status}
+        </p>
+        <p class="series-description">{series.description}</p>
+      </header>
 
-        <section class="meta-grid">
-          <div class="meta-card">
-            <p class="label">主题</p>
-            <p class="value">{series.theme}</p>
-          </div>
-          <div class="meta-card">
-            <p class="label">状态</p>
-            <p class="value">{series.status}</p>
-          </div>
-          <div class="meta-card">
-            <p class="label">文章数量</p>
-            <p class="value">{posts.length} 篇</p>
-          </div>
-          <div class="meta-card">
-            <p class="label">阅读方式</p>
-            <p class="value">建议按左侧顺序依次阅读</p>
-          </div>
-        </section>
+      <section class="content-section">
+        <h2>如何阅读这个系列</h2>
+        <p>
+          这个页面相当于系列导读，不指向某一篇具体文章，而是先说明这个系列想解决什么问题、覆盖哪些范围，以及应该如何开始阅读。
+        </p>
+        <p>
+          左侧是完整目录。建议按顺序阅读；如果你已经有明确问题，也可以直接跳到对应章节。
+        </p>
+      </section>
 
-        <section class="content-section">
-          <h2>系列说明</h2>
-          <p>
-            这个页面相当于系列首页，不指向某一篇具体文章，而是先说明这个系列想解决什么问题、覆盖哪些范围，以及应该如何开始阅读。
-          </p>
-          <p>
-            左侧是完整的系列目录。你可以从第一讲开始，也可以根据当前关心的问题直接跳到某一讲。
-          </p>
-        </section>
-
-        <section class="content-section">
-          <h2>当前收录</h2>
-          {
-            posts.length > 0 ? (
-              <ul>
-                <li>起始文章：{firstPost?.data.title}</li>
-                <li>最新文章：{latestPost?.data.title}</li>
-                <li>
-                  系列路径：<code>/series/{series.slug}</code>
-                </li>
-              </ul>
-            ) : (
-              <p class="empty-note">
-                这个系列已经建档，但当前还没有正式发布文章。
-              </p>
-            )
-          }
-        </section>
-      </article>
-      <Fragment slot="right">
-        <div class="aside-panel">
-          <p class="eyebrow">阅读建议</p>
-          <h2>从哪里开始</h2>
-          <ul>
-            <li>建议先从第一讲开始，建立这个系列的整体上下文。</li>
-            <li>如果你已经了解背景，也可以直接从左侧跳到某一讲。</li>
-            <li>阅读正文时，右侧辅助区会切换为当前文章的小节目录。</li>
-          </ul>
-        </div>
-      </Fragment>
-    </SeriesDocsShell>
-  </main>
+      <section class="content-section">
+        <h2>当前状态</h2>
+        {
+          posts.length > 0 ? (
+            <ul class="series-facts">
+              <li>主题：{series.theme}</li>
+              <li>状态：{series.status}</li>
+              <li>文章数量：{posts.length} 篇</li>
+              <li>起始文章：{firstPost?.data.title}</li>
+              <li>最新文章：{latestPost?.data.title}</li>
+            </ul>
+          ) : (
+            <p class="empty-note">
+              这个系列已经建档，但当前还没有正式发布文章。
+            </p>
+          )
+        }
+      </section>
+    </article>
+  </SeriesDocsShell>
 </BasePage>
 <style>
   .back-link {
     display: inline-block;
-    margin-bottom: 1.25rem;
-    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    font-size: 0.92rem;
+    text-decoration: none;
   }
 
   .series-content {
@@ -140,6 +109,7 @@ const latestPost = posts[posts.length - 1];
 
   .series-header h1 {
     margin: 0 0 0.65rem;
+    max-width: 15ch;
   }
 
   .series-summary {
@@ -156,39 +126,14 @@ const latestPost = posts[posts.length - 1];
     line-height: 1.9;
   }
 
-  .meta-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    margin-bottom: 2.25rem;
-  }
-
-  .meta-card {
-    padding: 1rem 1.05rem;
-    border: 1px solid rgb(var(--gray-light));
-    border-radius: 14px;
-    background: white;
-  }
-
-  .meta-card .label {
-    margin: 0 0 0.35rem;
-    color: rgb(var(--gray));
-    font-size: 0.84rem;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
-
-  .meta-card .value {
-    margin: 0;
-    color: rgb(var(--gray-dark));
-  }
-
   .content-section + .content-section {
     margin-top: 2.5rem;
   }
 
   .content-section h2 {
     margin-top: 0;
+    margin-bottom: 0.9rem;
+    font-size: 1.3rem;
   }
 
   .content-section p,
@@ -201,56 +146,15 @@ const latestPost = posts[posts.length - 1];
     margin: 0;
   }
 
+  .series-facts {
+    padding-left: 1.1rem;
+  }
+
   .empty-note {
     color: rgb(var(--gray));
   }
-
-  .aside-panel {
-    position: sticky;
-    top: 5.5rem;
-    padding: 1rem 0.95rem;
-    border: 1px solid rgba(var(--gray-light), 0.9);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(10px);
-  }
-
-  .aside-panel h2 {
-    margin: 0 0 0.7rem;
-    font-size: 1rem;
-  }
-
-  .aside-panel p,
-  .aside-panel li {
-    color: rgb(var(--gray));
-    font-size: 0.92rem;
-    line-height: 1.7;
-  }
-
-  .aside-panel ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .aside-panel li + li {
-    margin-top: 0.45rem;
-  }
-
-  .aside-panel .eyebrow {
-    margin: 0 0 0.5rem;
-    color: rgb(var(--gray));
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
+  
   @media (max-width: 760px) {
-    .meta-grid {
-      grid-template-columns: 1fr;
-    }
-
     .series-description {
       font-size: 1rem;
     }

@@ -35,47 +35,38 @@ const currentSeries = getSeriesBySlug({ slug: series });
 ---
 
 <BasePage title={title} description={description}>
-  <main>
-    <SeriesDocsShell
-      title={currentSeries?.title || ""}
-      posts={seriesPosts}
-      currentPostId={currentPostId}
-    >
-      <div class="prose">
-        <div class="title">
-          <p class="series-kicker">系列文章</p>
-          <div class="date">
-            <FormattedDate date={pubDate} />
-            {
-              updatedDate && (
-                <div class="last-updated-on">
-                  最后更新于 <FormattedDate date={updatedDate} />
-                </div>
-              )
-            }
-          </div>
-          <h1>{title}</h1>
+  <SeriesDocsShell
+    title={currentSeries?.title || ""}
+    posts={seriesPosts}
+    currentPostId={currentPostId}
+  >
+    <div class="prose">
+      <div class="title">
+        <p class="series-kicker">系列文章</p>
+        <div class="date">
+          <FormattedDate date={pubDate} />
           <PostMeta series={series} seriesOrder={seriesOrder} topics={topics} />
-          {description && <p class="description">{description}</p>}
-          <div class="series-summary">
-            <p>
-              这篇文章收录在系列
-              <a href={`/series/${currentSeries?.slug || ""}/`}>
-                {currentSeries?.title}
-              </a>
-              中。
-            </p>
-            <p>{currentSeries?.description}</p>
-          </div>
-          <hr />
         </div>
-        <slot />
+        <h2>{title}</h2>
+        {description && <p class="description">{description}</p>}
+        <div class="series-summary">
+          <p>
+            这篇文章收录在系列
+            <a href={`/series/${currentSeries?.slug || ""}/`}>
+              {currentSeries?.title}
+            </a>
+            中。
+          </p>
+          <p>{currentSeries?.description}</p>
+        </div>
+        <hr />
       </div>
-      <Fragment slot="right">
-        <ArticleToc headings={headings} />
-      </Fragment>
-    </SeriesDocsShell>
-  </main>
+      <slot />
+    </div>
+    <Fragment slot="right">
+      <ArticleToc headings={headings} />
+    </Fragment>
+  </SeriesDocsShell>
 </BasePage>
 
 <style>
@@ -105,6 +96,9 @@ const currentSeries = getSeriesBySlug({ slug: series });
     margin-bottom: 0.65rem;
     color: rgb(var(--gray));
     font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .last-updated-on {
     display: inline;
@@ -119,8 +113,7 @@ const currentSeries = getSeriesBySlug({ slug: series });
   }
   .series-summary {
     margin: 0 0 1rem;
-    padding-left: 1rem;
-    border-left: 2px solid rgb(var(--gray-light));
+    font-size: 0.95rem;
     color: rgb(var(--gray));
   }
   .series-summary p {

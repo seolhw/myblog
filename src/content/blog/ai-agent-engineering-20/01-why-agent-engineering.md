@@ -2,6 +2,7 @@
 title: 第一讲：AI Agent 为什么需要工程化
 description: 从演示 Demo 到可上线系统，先建立 AI Agent 工程化的整体认知。
 pubDate: 2026-06-01
+updatedDate: 2026-06-02
 series: ai-agent-engineering-20
 seriesOrder: 1
 topics:

@@ -1,115 +1,105 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-	title: string;
-	posts: CollectionEntry<'blog'>[];
-	currentPostId?: string;
+  title: string;
+  posts: CollectionEntry<"blog">[];
+  currentPostId?: string;
 }
 
 const { title, posts, currentPostId } = Astro.props;
 ---
 
 <div class="series-nav">
-	<p class="eyebrow">讲义</p>
-	<h2>{title}</h2>
-	<ol>
-		{
-			posts.map((post, index) => (
-				<li>
-					<a
-						href={`/blog/${post.id}/`}
-						class:list={{ active: post.id === currentPostId }}
-					>
-						<span class="order">
-							{String(post.data.seriesOrder ?? index + 1).padStart(2, '0')}
-						</span>
-						<span class="text">{post.data.title}</span>
-					</a>
-				</li>
-			))
-		}
-	</ol>
+  <p class="eyebrow">讲义</p>
+  <h2>{title}</h2>
+  <ol>
+    {
+      posts.map((post, index) => (
+        <li>
+          <a
+            href={`/blog/${post.id}/`}
+            class:list={{ active: post.id === currentPostId }}
+          >
+            <span class="text">{post.data.title}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
 </div>
 
 <style>
-	.series-nav {
-		position: sticky;
-		top: 5.5rem;
-		padding: 1rem 0.9rem;
-		border: 1px solid rgba(var(--gray-light), 0.9);
-		border-radius: 16px;
-		background: rgba(255, 255, 255, 0.72);
-		backdrop-filter: blur(10px);
-	}
+  .series-nav {
+    position: sticky;
+    top: 5.5rem;
+    padding: 0.15rem 0;
+  }
 
-	.eyebrow {
-		margin: 0 0 0.5rem;
-		color: rgb(var(--gray));
-		font-size: 0.8rem;
-		font-weight: 700;
-		letter-spacing: 0.04em;
-		text-transform: uppercase;
-	}
+  .eyebrow {
+    margin: 0 0 0.5rem;
+    color: rgb(var(--gray));
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
 
-	h2 {
-		margin: 0 0 1rem;
-		font-size: 0.98rem;
-		line-height: 1.45;
-	}
+  h2 {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
 
-	ol {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 
-	li + li {
-		margin-top: 0.35rem;
-	}
+  li + li {
+    margin-top: 0.35rem;
+  }
 
-	a {
-		display: flex;
-		gap: 0.7rem;
-		padding: 0.45rem 0.55rem;
-		border-radius: 10px;
-		border: 1px solid transparent;
-		color: rgb(var(--gray-dark));
-		text-decoration: none;
-		transition:
-			background-color 0.2s ease,
-			border-color 0.2s ease,
-			color 0.2s ease;
-	}
+  a {
+    display: flex;
+    gap: 0.7rem;
+    padding: 0.38rem 0;
+    color: rgb(var(--gray-dark));
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
 
-	a:hover {
-		background: rgba(var(--gray-light), 0.38);
-		border-color: rgba(var(--gray-light), 0.9);
-		color: rgb(var(--black));
-	}
+  a:hover {
+    color: rgb(var(--black));
+  }
 
-	a.active {
-		background: rgba(0, 111, 106, 0.08);
-		border-color: rgba(0, 111, 106, 0.18);
-		color: var(--accent-dark);
-	}
+  a.active {
+    color: var(--accent-dark);
+  }
 
-	.order {
-		flex-shrink: 0;
-		width: 1.8rem;
-		color: rgb(var(--gray));
-		font-size: 0.82rem;
-		font-variant-numeric: tabular-nums;
-	}
+  .order {
+    flex-shrink: 0;
+    width: 1.8rem;
+    color: rgb(var(--gray));
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+  }
 
-	.text {
-		font-size: 0.92rem;
-		line-height: 1.5;
-	}
+  a.active .order,
+  a.active .text {
+    color: var(--accent-dark);
+    font-weight: 600;
+  }
 
-	@media (max-width: 980px) {
-		.series-nav {
-			position: static;
-		}
-	}
+  .text {
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 980px) {
+    .series-nav {
+      position: static;
+    }
+  }
 </style>
