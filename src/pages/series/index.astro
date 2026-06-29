@@ -1,112 +1,110 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import { getSeriesSummaries, sortPosts } from '../../utils/blog';
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getSeriesSummaries, sortPosts } from "../../utils/blog";
 
 const posts = sortPosts({
-	posts: await getCollection('blog'),
+  posts: await getCollection("blog"),
 });
 const seriesList = getSeriesSummaries({ posts });
 ---
 
 <!doctype html>
 <html lang="zh-CN">
-	<head>
-		<BaseHead title={`系列 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 720px;
-			}
+  <head>
+    <BaseHead title={`系列 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+    <style>
+      .page-heading {
+        margin-bottom: 3rem;
+      }
 
-			.page-heading {
-				margin-bottom: 3rem;
-			}
+      .page-heading p {
+        max-width: 42rem;
+        color: rgb(var(--gray));
+        line-height: 1.9;
+      }
 
-			.page-heading p {
-				max-width: 42rem;
-				color: rgb(var(--gray));
-				line-height: 1.9;
-			}
+      .series-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid rgb(var(--gray-light));
+      }
 
-			.series-list {
-				list-style: none;
-				margin: 0;
-				padding: 0;
-				border-top: 1px solid rgb(var(--gray-light));
-			}
+      .series-list li {
+        border-bottom: 1px solid rgb(var(--gray-light));
+      }
 
-			.series-list li {
-				border-bottom: 1px solid rgb(var(--gray-light));
-			}
+      .series-link {
+        display: block;
+        padding: 1.35rem 0;
+        text-decoration: none;
+      }
 
-			.series-link {
-				display: block;
-				padding: 1.35rem 0;
-				text-decoration: none;
-			}
+      .series-link h2 {
+        margin: 0 0 0.4rem;
+        font-size: 1.4rem;
+      }
 
-			.series-link h2 {
-				margin: 0 0 0.4rem;
-				font-size: 1.4rem;
-			}
+      .series-link p {
+        margin: 0;
+        color: rgb(var(--gray));
+        line-height: 1.8;
+      }
 
-			.series-link p {
-				margin: 0;
-				color: rgb(var(--gray));
-				line-height: 1.8;
-			}
+      .series-link:hover h2 {
+        color: var(--accent);
+      }
 
-			.series-link:hover h2 {
-				color: var(--accent);
-			}
+      .series-meta {
+        margin-bottom: 0.45rem;
+        font-size: 0.92rem;
+        color: rgb(var(--gray));
+      }
 
-			.series-meta {
-				margin-bottom: 0.45rem;
-				font-size: 0.92rem;
-				color: rgb(var(--gray));
-			}
+      @media (max-width: 720px) {
+        main {
+          width: 100%;
+        }
 
-			@media (max-width: 720px) {
-				main {
-					width: 100%;
-				}
+        .page-heading {
+          margin-bottom: 2.25rem;
+        }
 
-				.page-heading {
-					margin-bottom: 2.25rem;
-				}
-
-				.series-link h2 {
-					font-size: 1.2rem;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<header class="page-heading">
-				<h1>系列</h1>
-				<p>这里集中展示当前正在写、已经规划或持续更新中的专题系列。页面结构尽量克制，优先帮助你找到值得进入的长文目录。</p>
-			</header>
-			<ul class="series-list">
-				{
-					seriesList.map((series) => (
-						<li>
-							<a class="series-link" href={`/series/${series.slug}/`}>
-								<p class="series-meta">
-									{series.theme} · {series.postCount} 篇文章 · {series.status}
-								</p>
-								<h2>{series.title}</h2>
-								<p>{series.description}</p>
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</main>
-		<Footer />
-	</body>
+        .series-link h2 {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <header class="page-heading">
+        <h2>系列</h2>
+        <p>
+          这里集中展示当前正在写、已经规划或持续更新中的专题系列。页面结构尽量克制，优先帮助你找到值得进入的长文目录。
+        </p>
+      </header>
+      <ul class="series-list">
+        {
+          seriesList.map((series) => (
+            <li>
+              <a class="series-link" href={`/series/${series.slug}/`}>
+                <p class="series-meta">
+                  {series.theme} · {series.postCount} 篇文章 · {series.status}
+                </p>
+                <h2>{series.title}</h2>
+                <p>{series.description}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+    <Footer />
+  </body>
 </html>

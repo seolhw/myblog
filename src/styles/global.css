@@ -36,7 +36,6 @@ main {
 	width: 760px;
 	max-width: calc(100% - 2em);
 	margin: auto;
-	padding: 4rem 0 4.5rem;
 }
 h1,
 h2,
@@ -48,9 +47,6 @@ h6 {
 	color: rgb(var(--black));
 	line-height: 1.25;
 	letter-spacing: 0;
-}
-h1 {
-	font-size: clamp(2rem, 7vw, 3rem);
 }
 h2 {
 	font-size: 1.8rem;
