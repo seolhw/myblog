@@ -1,10 +1,12 @@
 ---
 import FormattedDate from "../components/FormattedDate.astro";
+import WalineComments from "../components/WalineComments.astro";
 import PostMeta from "../components/PostMeta.astro";
 import BasePage from "./BasePage.astro";
 import { getSeriesBySlug } from "../data/series";
 
 const {
+  id,
   title,
   description,
   pubDate,
@@ -51,6 +53,7 @@ const currentSeries = getSeriesBySlug({ slug: series });
           <hr />
         </div>
         <slot />
+        <WalineComments pagePath={`/blog/${id}/`} />
       </div>
     </article>
   </main>

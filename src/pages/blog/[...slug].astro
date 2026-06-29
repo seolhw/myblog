@@ -37,7 +37,7 @@ const shouldUseSeriesPost = Boolean(currentSeries && seriesPosts.length > 0);
       <Content />
     </SeriesBlogPost>
   ) : (
-    <BlogPost {...post.data}>
+    <BlogPost {...post.data} id={post.id}>
       <Content />
     </BlogPost>
   )

@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
 import ArticleToc from "../components/ArticleToc.astro";
+import WalineComments from "../components/WalineComments.astro";
 import PostMeta from "../components/PostMeta.astro";
 import SeriesDocsShell from "../components/SeriesDocsShell.astro";
 import BasePage from "./BasePage.astro";
@@ -61,6 +62,7 @@ const currentSeries = getSeriesBySlug({ slug: series });
         {description && <p class="description">摘要：{description}</p>}
       </div>
       <slot />
+      <WalineComments pagePath={`/blog/${currentPostId}/`} />
     </div>
     <Fragment slot="right">
       <ArticleToc headings={headings} />

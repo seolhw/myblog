@@ -1,0 +1,32 @@
+---
+interface Props {
+  pagePath: string;
+}
+
+const { pagePath } = Astro.props;
+const serverURL =
+  import.meta.env.PUBLIC_WALINE_SERVER_URL || "https://waline.huiwang.fun";
+---
+
+{
+  serverURL && (
+    <section class="comments">
+      <h2>评论</h2>
+      <div data-waline-root data-server-url={serverURL} data-path={pagePath} />
+      <script>import "../scripts/initWaline";</script>
+    </section>
+  )
+}
+
+<style>
+  .comments {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(var(--gray-light));
+  }
+
+  .comments h2 {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+  }
+</style>
