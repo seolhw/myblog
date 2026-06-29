@@ -5,24 +5,25 @@ const today = new Date();
 ---
 
 <footer>
-		<p>&copy; {today.getFullYear()} 李会旺. 保留所有权利。</p>
-		<div class="links">
-			<a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
-			<a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-			<a href="/rss.xml">RSS</a>
-		</div>
+	<p>&copy; {today.getFullYear()} 李会旺. 保留所有权利。</p>
+	<div class="links">
+		<a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
+		<a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+		<a href="/rss.xml">RSS</a>
+	</div>
 </footer>
 <style>
 	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		padding: 2.5rem 1rem 4rem;
+		border-top: 1px solid rgba(var(--gray-light), 80%);
 		color: rgb(var(--gray));
 		text-align: center;
+		font-size: 0.95rem;
 	}
 	.links {
 		display: flex;
 		justify-content: center;
-		gap: 1em;
+		gap: 1rem;
 		margin-top: 0.75em;
 		flex-wrap: wrap;
 	}

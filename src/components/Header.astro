@@ -20,13 +20,18 @@ import HeaderLink from './HeaderLink.astro';
 <style>
 	header {
 		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		padding: 0 1rem;
+		background: rgba(251, 250, 247, 92%);
+		border-bottom: 1px solid rgba(var(--gray-light), 80%);
+		backdrop-filter: blur(16px);
+		position: sticky;
+		top: 0;
+		z-index: 10;
 	}
 	h2 {
 		margin: 0;
-		font-size: 1em;
+		font-size: 1rem;
+		white-space: nowrap;
 	}
 
 	h2 a,
@@ -38,17 +43,25 @@ import HeaderLink from './HeaderLink.astro';
 		align-items: center;
 		justify-content: space-between;
 		gap: 1rem;
-		flex-wrap: wrap;
+		width: min(100%, 960px);
+		min-height: 64px;
+		margin: 0 auto;
 	}
 	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
+		padding: 0.5rem 0.35rem;
+		color: rgb(var(--gray-dark));
+		border-bottom: 2px solid transparent;
 		text-decoration: none;
 	}
 	nav a.active {
 		text-decoration: none;
 		border-bottom-color: var(--accent);
+		color: rgb(var(--black));
+	}
+	.internal-links {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
 	}
 	.external-links {
 		display: flex;
@@ -56,11 +69,18 @@ import HeaderLink from './HeaderLink.astro';
 	}
 	@media (max-width: 720px) {
 		nav {
-			justify-content: center;
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.2rem;
+			padding: 0.7rem 0;
+		}
+		.internal-links {
+			width: 100%;
+			gap: 0.5rem;
+			overflow-x: auto;
 		}
 		.external-links {
-			width: 100%;
-			justify-content: center;
+			display: none;
 		}
 	}
 </style>
