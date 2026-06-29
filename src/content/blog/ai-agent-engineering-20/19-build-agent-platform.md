@@ -4,6 +4,7 @@ description: 从平台化视角评估抽象层、复用性与组织收益。
 pubDate: 2026-06-19
 series: ai-agent-engineering-20
 seriesOrder: 19
+seriesGroup: 团队协作与工程实践
 topics:
   - AI Agent
   - 平台化

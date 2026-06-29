@@ -4,6 +4,7 @@ description: 设计 Agent 的任务状态流转、阶段划分与恢复机制。
 pubDate: 2026-06-08
 series: ai-agent-engineering-20
 seriesOrder: 8
+seriesGroup: Agent 工程的核心能力
 topics:
   - AI Agent
   - 状态机

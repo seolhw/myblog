@@ -4,6 +4,7 @@ description: 从主观体验走向可量化评测，建立 Agent 的质量基线
 pubDate: 2026-06-10
 series: ai-agent-engineering-20
 seriesOrder: 10
+seriesGroup: Evals、Debug、可观测性
 topics:
   - AI Agent
   - 评测

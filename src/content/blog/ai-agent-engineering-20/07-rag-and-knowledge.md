@@ -4,6 +4,7 @@ description: 围绕知识库接入、检索质量和回答稳定性展开。
 pubDate: 2026-06-07
 series: ai-agent-engineering-20
 seriesOrder: 7
+seriesGroup: Agent 工程的核心能力
 topics:
   - AI Agent
   - RAG

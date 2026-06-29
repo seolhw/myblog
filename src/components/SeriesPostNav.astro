@@ -8,25 +8,48 @@ interface Props {
 }
 
 const { title, posts, currentPostId } = Astro.props;
+const groupedPosts = posts.reduce<
+  { name: string; posts: CollectionEntry<"blog">[] }[]
+>((groups, post) => {
+  const groupName = post.data.seriesGroup?.trim() || "未分组";
+  const currentGroup = groups.at(-1);
+
+  if (currentGroup && currentGroup.name === groupName) {
+    currentGroup.posts.push(post);
+    return groups;
+  }
+
+  groups.push({
+    name: groupName,
+    posts: [post],
+  });
+
+  return groups;
+}, []);
 ---
 
 <div class="series-nav">
   <p class="eyebrow">讲义</p>
   <h2>{title}</h2>
-  <ol>
-    {
-      posts.map((post, index) => (
-        <li>
-          <a
-            href={`/blog/${post.id}/`}
-            class:list={{ active: post.id === currentPostId }}
-          >
-            <span class="text">{post.data.title}</span>
-          </a>
-        </li>
-      ))
-    }
-  </ol>
+  {
+    groupedPosts.map((group) => (
+      <section class="group">
+        <p class="group-title">{group.name}</p>
+        <ol class="posts">
+          {group.posts.map((post, index) => (
+            <li>
+              <a
+                href={`/blog/${post.id}/`}
+                class:list={{ active: post.id === currentPostId }}
+              >
+                <span class="text">{post.data.title}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))
+  }
 </div>
 
 <style>
@@ -34,6 +57,10 @@ const { title, posts, currentPostId } = Astro.props;
     position: sticky;
     top: 5.5rem;
     padding: 0.15rem 0;
+  }
+
+  .posts {
+    margin-left: 1rem;
   }
 
   .eyebrow {
@@ -49,6 +76,17 @@ const { title, posts, currentPostId } = Astro.props;
     margin: 0 0 1rem;
     font-size: 0.95rem;
     line-height: 1.45;
+  }
+
+  .group + .group {
+    margin-top: 1.1rem;
+  }
+
+  .group-title {
+    margin: 0 0 0.35rem;
+    font-size: 1rem;
+    line-height: 1.45;
+    font-weight: 600;
   }
 
   ol {

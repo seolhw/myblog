@@ -4,6 +4,7 @@ description: 讨论模型成本、请求时延、缓存与吞吐优化策略。
 pubDate: 2026-06-15
 series: ai-agent-engineering-20
 seriesOrder: 15
+seriesGroup: 框架、产品化和个人实践
 topics:
   - AI Agent
   - 性能优化

@@ -4,6 +4,7 @@ description: 讨论产品、工程、模型与运营如何围绕 Agent 协作。
 pubDate: 2026-06-18
 series: ai-agent-engineering-20
 seriesOrder: 18
+seriesGroup: 团队协作与工程实践
 topics:
   - AI Agent
   - 团队协作

@@ -4,6 +4,7 @@ description: 梳理 Agent 系统的核心组成：模型、上下文、工具、
 pubDate: 2026-06-02
 series: ai-agent-engineering-20
 seriesOrder: 2
+seriesGroup: AI Agent 基础
 topics:
   - AI Agent
   - 系统设计

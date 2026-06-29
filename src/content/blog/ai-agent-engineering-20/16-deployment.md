@@ -4,6 +4,7 @@ description: 覆盖本地开发、测试环境、正式发布与配置管理。
 pubDate: 2026-06-16
 series: ai-agent-engineering-20
 seriesOrder: 16
+seriesGroup: 框架、产品化和个人实践
 topics:
   - AI Agent
   - 部署

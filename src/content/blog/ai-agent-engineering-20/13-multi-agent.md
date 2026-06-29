@@ -4,6 +4,7 @@ description: 评估多 Agent 架构的适用场景、收益与复杂度。
 pubDate: 2026-06-13
 series: ai-agent-engineering-20
 seriesOrder: 13
+seriesGroup: 多 Agent 与系统协作
 topics:
   - AI Agent
   - 多 Agent

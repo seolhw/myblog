@@ -4,6 +4,7 @@ description: 讨论 Agent 如何调用工具、定义工具契约，以及如何
 pubDate: 2026-06-04
 series: ai-agent-engineering-20
 seriesOrder: 4
+seriesGroup: AI Agent 基础
 topics:
   - AI Agent
   - Tool Calling

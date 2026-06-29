@@ -5,6 +5,7 @@ pubDate: 2026-06-01
 updatedDate: 2026-06-02
 series: ai-agent-engineering-20
 seriesOrder: 1
+seriesGroup: AI Agent 基础
 topics:
   - AI Agent
   - 工程化

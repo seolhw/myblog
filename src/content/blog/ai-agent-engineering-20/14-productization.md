@@ -4,6 +4,7 @@ description: 思考 AI Agent 如何从技术能力演进成稳定可用的产品
 pubDate: 2026-06-14
 series: ai-agent-engineering-20
 seriesOrder: 14
+seriesGroup: 框架、产品化和个人实践
 topics:
   - AI Agent
   - 产品化

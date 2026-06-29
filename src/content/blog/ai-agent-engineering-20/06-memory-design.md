@@ -4,6 +4,7 @@ description: 分析短期记忆、长期记忆与外部知识存储在 Agent 中
 pubDate: 2026-06-06
 series: ai-agent-engineering-20
 seriesOrder: 6
+seriesGroup: Agent 工程的核心能力
 topics:
   - AI Agent
   - 记忆系统
