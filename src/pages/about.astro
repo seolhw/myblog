@@ -4,6 +4,7 @@ import BasePage from "../layouts/BasePage.astro";
 
 <BasePage title="个人介绍" description="履历，技术栈，开源项目">
   <main>
+    <h2>个人介绍</h2>
     <p>
       你好，我是 huiwang，一名全栈软件工程师，主要技术栈是 Node.js 和
       React，目前也在持续关注 AI 应用、自动化工具和独立产品构建。
@@ -50,7 +51,7 @@ import BasePage from "../layouts/BasePage.astro";
       <li>
         工程实践：RESTful、Swagger/OpenAPI、事件驱动、分层架构、微服务、领域驱动设计
       </li>
-      <li>AI 工具：ChatGPT、Kimi、Llama、Qwen、Gemma、文心一言</li>
+      <li>AI & AI Agent：ChatGPT、Claue Code、Codex、OpenClaw</li>
       <li>
         云原生：Docker、Kubernetes、DevOps、GitOps、CI/CD、Serverless、FaaS
       </li>
@@ -74,3 +75,12 @@ import BasePage from "../layouts/BasePage.astro";
     </ul>
   </main>
 </BasePage>
+
+<style>
+  main {
+    width: min(calc(100% - 2rem), 860px);
+  }
+  h2 {
+    margin-top: 1rem;
+  }
+</style>
