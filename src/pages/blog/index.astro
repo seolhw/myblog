@@ -1,126 +1,120 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
-import PostListItem from '../../components/PostListItem.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import { getSeriesSummaries, sortPosts } from '../../utils/blog';
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import PostListItem from "../../components/PostListItem.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getSeriesSummaries, sortPosts } from "../../utils/blog";
 
 const posts = sortPosts({
-	posts: await getCollection('blog'),
+  posts: await getCollection("blog"),
 });
 const seriesList = getSeriesSummaries({ posts });
 ---
 
 <!doctype html>
 <html lang="zh-CN">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 720px;
-			}
-			.page-heading {
-				margin-bottom: 3rem;
-			}
-			.page-heading p {
-				max-width: 42rem;
-				color: rgb(var(--gray));
-				line-height: 1.9;
-			}
-			.series-overview {
-				margin: 0 0 3rem;
-			}
-			.section-heading {
-				margin-bottom: 1.1rem;
-			}
-			.section-heading h2 {
-				margin: 0 0 0.35rem;
-			}
-			.section-heading p {
-				margin: 0;
-				color: rgb(var(--gray));
-				font-size: 0.98rem;
-			}
-			.series-list,
-			.post-list {
-				list-style: none;
-				margin: 0;
-				padding: 0;
-				border-top: 1px solid rgb(var(--gray-light));
-			}
-			.series-list li,
-			.post-list li {
-				border-bottom: 1px solid rgb(var(--gray-light));
-			}
-			.series-link,
-			.post-link {
-				display: block;
-				padding: 1.35rem 0;
-				text-decoration: none;
-			}
-			.series-link:hover h3,
-			.post-link:hover .title {
-				color: var(--accent);
-			}
-			.series-link h3 {
-				margin: 0 0 0.35rem;
-				font-size: 1.3rem;
-				line-height: 1.35;
-			}
-			.series-meta,
-			.series-description {
-				margin: 0;
-				color: rgb(var(--gray-dark));
-				line-height: 1.85;
-			}
-			@media (max-width: 720px) {
-				main {
-					width: 100%;
-				}
-				.series-link h3 {
-					font-size: 1.18rem;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<header class="page-heading">
-				<h2>文章</h2>
-				<p>按发布时间整理全部文章。这里不强调花哨的视觉模块，而是尽量让你快速扫过标题、时间、系列与摘要，直接进入想读的内容。</p>
-			</header>
-			<section class="series-overview">
-				<div class="section-heading">
-					<h2>系列专题</h2>
-					<p>如果你想连续阅读一个主题，可以先从系列进入。</p>
-				</div>
-				<ul class="series-list">
-					{
-						seriesList.map((series) => (
-							<li>
-								<a class="series-link" href={`/series/${series.slug}/`}>
-									<p class="series-meta">
-										{series.theme} · {series.postCount} 篇文章 · {series.status}
-									</p>
-									<h3>{series.title}</h3>
-									<p class="series-description">{series.description}</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-			<section>
-				<ul class="post-list">
-					{
-						posts.map((post) => <PostListItem post={post} titleAs="h4" />)
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .page-heading {
+        margin-bottom: 3rem;
+      }
+      .page-heading p {
+        max-width: 42rem;
+        color: rgb(var(--gray));
+        line-height: 1.9;
+      }
+      .series-overview {
+        margin: 0 0 3rem;
+      }
+      .section-heading {
+        margin-bottom: 1.1rem;
+      }
+      .section-heading h2 {
+        margin: 0 0 0.35rem;
+      }
+      .section-heading p {
+        margin: 0;
+        color: rgb(var(--gray));
+        font-size: 0.98rem;
+      }
+      .series-list,
+      .post-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid rgb(var(--gray-light));
+      }
+      .series-list li,
+      .post-list li {
+        border-bottom: 1px solid rgb(var(--gray-light));
+      }
+      .series-link,
+      .post-link {
+        display: block;
+        padding: 1.35rem 0;
+        text-decoration: none;
+      }
+      .series-link:hover h3,
+      .post-link:hover .title {
+        color: var(--accent);
+      }
+      .series-link h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1.3rem;
+        line-height: 1.35;
+      }
+      .series-meta,
+      .series-description {
+        margin: 0;
+        color: rgb(var(--gray-dark));
+        line-height: 1.85;
+      }
+      @media (max-width: 760px) {
+        .series-link h3 {
+          font-size: 1.18rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <header class="page-heading">
+        <h2>文章</h2>
+        <p>
+          按发布时间整理全部文章。这里不强调花哨的视觉模块，而是尽量让你快速扫过标题、时间、系列与摘要，直接进入想读的内容。
+        </p>
+      </header>
+      <section class="series-overview">
+        <div class="section-heading">
+          <h2>系列专题</h2>
+          <p>如果你想连续阅读一个主题，可以先从系列进入。</p>
+        </div>
+        <ul class="series-list">
+          {
+            seriesList.map((series) => (
+              <li>
+                <a class="series-link" href={`/series/${series.slug}/`}>
+                  <p class="series-meta">
+                    {series.theme} · {series.postCount} 篇文章 · {series.status}
+                  </p>
+                  <h3>{series.title}</h3>
+                  <p class="series-description">{series.description}</p>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+      <section>
+        <ul class="post-list">
+          {posts.map((post) => <PostListItem post={post} titleAs="h4" />)}
+        </ul>
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>

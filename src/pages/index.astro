@@ -19,9 +19,6 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
-      main {
-        width: 720px;
-      }
       .hero {
         display: grid;
         gap: 1rem;
@@ -92,11 +89,6 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
       .read-more {
         margin-top: 1.1rem;
         font-size: 0.95rem;
-      }
-      @media (max-width: 720px) {
-        main {
-          width: 100%;
-        }
       }
     </style>
   </head>

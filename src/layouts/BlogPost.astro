@@ -25,12 +25,6 @@ const currentSeries = getSeriesBySlug({ slug: series });
   <head>
     <BaseHead title={title} description={description} />
     <style>
-      main {
-        width: 720px;
-        max-width: calc(100% - 1.25rem);
-        margin: auto;
-        padding-top: 2.5rem;
-      }
       .prose {
         width: 100%;
         padding: 0 0 4.5rem;
@@ -80,11 +74,7 @@ const currentSeries = getSeriesBySlug({ slug: series });
       .prose :global(blockquote) {
         margin: 2rem 0;
       }
-      @media (max-width: 720px) {
-        main {
-          width: 100%;
-          padding-top: 1rem;
-        }
+      @media (max-width: 760px) {
         .prose {
           padding-bottom: 3rem;
         }
