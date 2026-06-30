@@ -19,8 +19,35 @@ const { title, description, lang = "zh-CN" } = Astro.props;
     <slot name="head" />
   </head>
   <body>
-    <Header />
-    <slot />
-    <Footer />
+    <div class="page-shell">
+      <Header />
+      <div class="page-content">
+        <slot />
+      </div>
+      <Footer />
+    </div>
   </body>
 </html>
+<style>
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  .page-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
