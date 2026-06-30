@@ -17,14 +17,51 @@ const otherSeries = seriesList.filter(
   (series) => series.slug !== agentSeries?.slug,
 );
 
-const strengths = [
+const caseStudies = [
+  {
+    label: "Case A",
+    title: "案例 A：生产级 RAG / Knowledge Agent",
+    problem: "目标问题待补充：说明知识库问答、企业知识检索或垂直领域辅助决策的真实业务场景。",
+    agentCapability:
+      "Agent 能力待补充：RAG、tool calling、memory、引用溯源、人机确认流程。",
+    engineeringEvidence:
+      "工程证据待补充：eval 数据集、召回质量、latency、cost、observability、安全边界。",
+    status: "案例详情待补充",
+  },
+  {
+    label: "Case B",
+    title: "案例 B：业务流程自动化 Agent",
+    problem: "目标问题待补充：说明跨系统流程、审批、同步、运营或交付自动化场景。",
+    agentCapability:
+      "Agent 能力待补充：workflow、tool calling、状态管理、human-in-the-loop、失败恢复。",
+    engineeringEvidence:
+      "工程证据待补充：流程成功率可替换为真实指标、trace、告警、回滚与审计设计。",
+    status: "案例详情待补充",
+  },
+  {
+    label: "Case C",
+    title: "案例 C：开发者工具 / Coding Agent 实践",
+    problem: "目标问题待补充：说明代码理解、工程任务拆解、开发者效率或 IDE 辅助场景。",
+    agentCapability:
+      "Agent 能力待补充：代码上下文、工具调用、任务规划、沙箱执行、结果校验。",
+    engineeringEvidence:
+      "工程证据待补充：eval、测试覆盖、执行日志、权限隔离、成本和响应时间。",
+    status: "案例详情待补充",
+  },
+];
+
+const capabilities = [
   {
     label: "Agent 工程化",
     text: "关注工具调用、上下文工程、工作流编排、记忆、评估与可观测性，把 Agent 从 demo 推向可维护系统。",
   },
   {
-    label: "全栈交付经验",
-    text: "8 年 Node.js / React / TypeScript 经验，做过身份系统、权限模型、工作流、同步中心和审计日志。",
+    label: "Eval & Observability",
+    text: "关注离线评估、线上 trace、失败样本分析、成本与延迟，让 Agent 的质量变化可以被持续观察。",
+  },
+  {
+    label: "安全边界",
+    text: "关注 prompt injection、工具权限、审计日志、人工确认和敏感操作隔离，避免 Agent 越权执行。",
   },
   {
     label: "产品化意识",
@@ -36,7 +73,7 @@ const strengths = [
 <BasePage title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <main>
     <section class="hero">
-      <p class="eyebrow">AI Agent Engineer · TypeScript / Node.js / React</p>
+      <p class="eyebrow">AI Agent Engineer / TypeScript / Node.js / React</p>
       <h1>把 AI Agent 做成可靠、可评估、可交付的产品系统。</h1>
       <p class="hero-summary">
         你好，我是 huiwang，一名正在求职 <strong>AI Agent 工程师</strong>&nbsp;
@@ -66,14 +103,49 @@ const strengths = [
       </dl>
     </section>
 
+    <section class="case-section">
+      <div class="section-heading">
+        <p class="section-kicker">Featured Projects</p>
+        <h2>案例与项目证据</h2>
+        <p>
+          下面先放真实案例的结构占位，后续替换成具体项目、指标、架构图和链接。
+        </p>
+      </div>
+      <div class="case-grid">
+        {
+          caseStudies.map((item) => (
+            <article class="case-card">
+              <p class="case-label">{item.label}</p>
+              <h3>{item.title}</h3>
+              <dl>
+                <div>
+                  <dt>目标问题</dt>
+                  <dd>{item.problem}</dd>
+                </div>
+                <div>
+                  <dt>Agent 能力</dt>
+                  <dd>{item.agentCapability}</dd>
+                </div>
+                <div>
+                  <dt>工程证据</dt>
+                  <dd>{item.engineeringEvidence}</dd>
+                </div>
+              </dl>
+              <p class="case-status">{item.status}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
     <section class="focus-section">
       <div class="section-heading">
-        <p class="section-kicker">Focus</p>
+        <p class="section-kicker">Capability</p>
         <h2>我能为 AI Agent 团队解决什么问题</h2>
       </div>
       <div class="strength-grid">
         {
-          strengths.map((item) => (
+          capabilities.map((item) => (
             <section class="strength-item">
               <h3>{item.label}</h3>
               <p>{item.text}</p>
@@ -159,10 +231,10 @@ const strengths = [
   .section-kicker {
     margin: 0;
     color: var(--accent-dark);
-    font-size: 0.82rem;
+    font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
   }
 
   .hero h1 {
@@ -252,6 +324,7 @@ const strengths = [
     line-height: 1.45;
   }
 
+  .case-section,
   .focus-section,
   .featured-series,
   .series-section,
@@ -276,12 +349,70 @@ const strengths = [
   .section-heading .section-kicker {
     margin-bottom: 0.55rem;
     color: var(--accent-dark);
-    font-size: 0.78rem;
+  }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .case-card {
+    display: flex;
+    min-height: 24rem;
+    flex-direction: column;
+    padding: 1.25rem;
+    border: 1px solid rgba(138, 79, 50, 0.26);
+    border-radius: 8px;
+    background: rgba(255, 250, 241, 0.58);
+  }
+
+  .case-label {
+    margin: 0 0 0.6rem;
+    color: var(--accent-dark);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .case-card h3 {
+    margin: 0 0 1rem;
+    font-size: 1.16rem;
+    line-height: 1.35;
+  }
+
+  .case-card dl {
+    display: grid;
+    gap: 0.9rem;
+    margin: 0;
+  }
+
+  .case-card dt {
+    margin: 0 0 0.2rem;
+    color: rgb(var(--black));
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+
+  .case-card dd {
+    margin: 0;
+    color: rgb(var(--gray-dark));
+    font-size: 0.92rem;
+    line-height: 1.72;
+  }
+
+  .case-status {
+    margin: auto 0 0;
+    padding-top: 1rem;
+    color: rgb(var(--gray));
+    font-size: 0.9rem;
+    font-weight: 700;
   }
 
   .strength-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1px;
     overflow: hidden;
     border: 1px solid rgba(var(--gray), 0.18);
@@ -408,7 +539,8 @@ const strengths = [
     }
 
     .signal-strip,
-    .strength-grid {
+    .strength-grid,
+    .case-grid {
       grid-template-columns: 1fr;
     }
 
