@@ -14,16 +14,22 @@ const hasRightSlot = Astro.slots.has("right");
 
 <div class="series-page-main">
   <div class:list={["series-shell", { "with-right-sidebar": hasRightSlot }]}>
-    <aside class="series-sidebar">
-      <SeriesPostNav
-        title={title}
-        posts={posts}
-        currentPostId={currentPostId}
-      />
-    </aside>
-    <section class="series-content">
-      <slot />
-    </section>
+    <div class="scroll-frame series-sidebar-frame" data-scroll-frame>
+      <aside class="series-sidebar" data-scroll-pane>
+        <SeriesPostNav
+          title={title}
+          posts={posts}
+          currentPostId={currentPostId}
+        />
+      </aside>
+      <span class="floating-scrollbar" aria-hidden="true"></span>
+    </div>
+    <div class="scroll-frame series-content-frame" data-scroll-frame>
+      <section class="series-content" data-scroll-pane>
+        <slot />
+      </section>
+      <span class="floating-scrollbar" aria-hidden="true"></span>
+    </div>
     {
       hasRightSlot && (
         <aside class="toc-sidebar">
@@ -58,26 +64,75 @@ const hasRightSlot = Astro.slots.has("right");
     grid-template-columns: 300px minmax(0, 1fr) 180px;
   }
 
-  .series-sidebar,
+  .scroll-frame,
   .series-content,
   .toc-sidebar {
     min-width: 0;
     min-height: 0;
   }
 
-  .series-content {
+  .scroll-frame {
     position: relative;
+    height: 100%;
+  }
+
+  .series-content {
     height: 100%;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
 
-  .series-sidebar {
+  .series-sidebar-frame {
     height: 100%;
     padding-right: 1.25rem;
     border-right: 1px solid rgba(var(--gray-light), 0.9);
+  }
+
+  .series-sidebar {
+    height: 100%;
     overflow-y: auto;
     overscroll-behavior: contain;
+  }
+
+  .series-page-main,
+  .series-sidebar,
+  .series-content {
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+  }
+
+  .series-page-main::-webkit-scrollbar,
+  .series-sidebar::-webkit-scrollbar,
+  .series-content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  .floating-scrollbar {
+    position: absolute;
+    top: var(--scrollbar-top, 8px);
+    right: 2px;
+    z-index: 2;
+    width: 4px;
+    height: var(--scrollbar-height, 40px);
+    border-radius: 999px;
+    background: rgba(var(--gray), 0.2);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateZ(0);
+    transition:
+      opacity 140ms ease,
+      background-color 140ms ease;
+  }
+
+  .scroll-frame.is-scrollable:hover .floating-scrollbar,
+  .scroll-frame.is-scrollable:focus-within .floating-scrollbar,
+  .scroll-frame.is-scrollable.is-scrolling .floating-scrollbar {
+    opacity: 1;
+  }
+
+  .scroll-frame.is-scrollable:hover .floating-scrollbar {
+    background: rgba(var(--gray-dark), 0.28);
   }
 
   .toc-sidebar {
@@ -104,23 +159,22 @@ const hasRightSlot = Astro.slots.has("right");
   @media (max-width: 980px) {
     .series-page-main {
       width: min(calc(100% - 1.25rem), 1380px);
-      height: auto;
       padding-top: 1rem;
-      overflow: visible;
+      overflow-y: auto;
     }
 
     .series-shell,
     .series-shell.with-right-sidebar {
       grid-template-columns: 1fr;
       gap: 1.5rem;
-      height: auto;
+      min-height: min-content;
     }
 
-    .series-sidebar {
+    .series-sidebar-frame {
       order: -1;
       padding-right: 0;
       border-right: none;
-      overflow: visible;
+      height: auto;
     }
 
     .toc-sidebar {
@@ -131,5 +185,84 @@ const hasRightSlot = Astro.slots.has("right");
     .series-content {
       overflow: visible;
     }
+
+    .scroll-frame {
+      height: auto;
+    }
+
+    .floating-scrollbar {
+      display: none;
+    }
   }
 </style>
+
+<script>
+  const setupFloatingScrollbars = () => {
+    const frames = document.querySelectorAll("[data-scroll-frame]");
+
+    frames.forEach((frame) => {
+      const pane = frame.querySelector("[data-scroll-pane]");
+      if (!(pane instanceof HTMLElement) || !(frame instanceof HTMLElement)) {
+        return;
+      }
+
+      let scrollTimeout;
+      let frameId;
+
+      const update = () => {
+        const scrollable = pane.scrollHeight > pane.clientHeight + 1;
+        frame.classList.toggle("is-scrollable", scrollable);
+
+        if (!scrollable) {
+          return;
+        }
+
+        const inset = 8;
+        const trackHeight = Math.max(0, frame.clientHeight - inset * 2);
+        const maxScroll = Math.max(1, pane.scrollHeight - pane.clientHeight);
+        const maxThumbTop = Math.max(0, trackHeight - 44);
+        const progress = pane.scrollTop / maxScroll;
+        const thumbTop = inset + progress * maxThumbTop;
+
+        frame.style.setProperty("--scrollbar-height", "44px");
+        frame.style.setProperty("--scrollbar-top", `${thumbTop}px`);
+      };
+
+      const scheduleUpdate = () => {
+        cancelAnimationFrame(frameId);
+        frameId = requestAnimationFrame(update);
+      };
+
+      const markScrolling = () => {
+        frame.classList.add("is-scrolling");
+        window.clearTimeout(scrollTimeout);
+        scrollTimeout = window.setTimeout(() => {
+          frame.classList.remove("is-scrolling");
+        }, 600);
+      };
+
+      pane.addEventListener(
+        "scroll",
+        () => {
+          scheduleUpdate();
+          markScrolling();
+        },
+        { passive: true },
+      );
+
+      const observer = new ResizeObserver(scheduleUpdate);
+      observer.observe(frame);
+      observer.observe(pane);
+
+      scheduleUpdate();
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupFloatingScrollbars, {
+      once: true,
+    });
+  } else {
+    setupFloatingScrollbars();
+  }
+</script>

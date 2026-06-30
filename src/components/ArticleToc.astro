@@ -15,7 +15,7 @@ const tocHeadings = headings.filter((heading) => heading.depth >= 2 && heading.d
 
 {
 	tocHeadings.length > 0 && (
-		<div class="article-toc">
+		<nav class="article-toc" aria-label="本页目录">
 			<p class="eyebrow">本页目录</p>
 			<ul>
 				{
@@ -26,9 +26,135 @@ const tocHeadings = headings.filter((heading) => heading.depth >= 2 && heading.d
 					))
 				}
 			</ul>
-		</div>
+		</nav>
 	)
 }
+
+<script>
+	const findTarget = (hash) => {
+		if (!hash || hash === "#") return null;
+
+		try {
+			return document.getElementById(decodeURIComponent(hash.slice(1)));
+		} catch {
+			return document.getElementById(hash.slice(1));
+		}
+	};
+
+	const isScrollable = (element) =>
+		element && element.scrollHeight > element.clientHeight + 1;
+
+	const getScrollRoot = () => {
+		const content = document.querySelector(".series-content");
+		const page = document.querySelector(".series-page-main");
+
+		if (isScrollable(content)) return content;
+		if (isScrollable(page)) return page;
+
+		return document.scrollingElement || document.documentElement;
+	};
+
+	const scrollTargetIntoRoot = (target, behavior = "smooth") => {
+		const root = getScrollRoot();
+
+		if (!(root instanceof HTMLElement)) {
+			target.scrollIntoView({ behavior, block: "start" });
+			return;
+		}
+
+		const rootRect = root.getBoundingClientRect();
+		const targetRect = target.getBoundingClientRect();
+		const top = root.scrollTop + targetRect.top - rootRect.top - 16;
+
+		root.scrollTo({
+			top: Math.max(0, top),
+			behavior,
+		});
+	};
+
+	const setActiveLink = (toc, hash) => {
+		toc.querySelectorAll('a[href^="#"]').forEach((link) => {
+			if (link.getAttribute("href") === hash) {
+				link.setAttribute("aria-current", "location");
+			} else {
+				link.removeAttribute("aria-current");
+			}
+		});
+	};
+
+	const syncActiveHeading = (toc) => {
+		const targets = Array.from(toc.querySelectorAll('a[href^="#"]'))
+			.map((link) => ({
+				hash: link.getAttribute("href"),
+				target: findTarget(link.getAttribute("href")),
+			}))
+			.filter((item) => item.hash && item.target);
+		const root = getScrollRoot();
+		const rootTop =
+			root instanceof HTMLElement ? root.getBoundingClientRect().top : 0;
+		let activeHash = targets[0]?.hash;
+
+		for (const item of targets) {
+			const top = item.target.getBoundingClientRect().top - rootTop;
+
+			if (top <= 28) {
+				activeHash = item.hash;
+			}
+		}
+
+		if (activeHash) {
+			setActiveLink(toc, activeHash);
+		}
+	};
+
+	const initArticleToc = () => {
+		document.querySelectorAll(".article-toc").forEach((toc) => {
+			if (toc instanceof HTMLElement && toc.dataset.enhanced === "true") {
+				return;
+			}
+
+			if (toc instanceof HTMLElement) {
+				toc.dataset.enhanced = "true";
+			}
+
+			toc.querySelectorAll('a[href^="#"]').forEach((link) => {
+				link.addEventListener("click", (event) => {
+					const hash = link.getAttribute("href");
+					const target = findTarget(hash);
+
+					if (!hash || !target) return;
+
+					event.preventDefault();
+					scrollTargetIntoRoot(target);
+					history.pushState(null, "", hash);
+					setActiveLink(toc, hash);
+				});
+			});
+
+			let frame = 0;
+			const root = getScrollRoot();
+			const onScroll = () => {
+				if (frame) return;
+
+				frame = requestAnimationFrame(() => {
+					frame = 0;
+					syncActiveHeading(toc);
+				});
+			};
+
+			root.addEventListener("scroll", onScroll, { passive: true });
+			syncActiveHeading(toc);
+		});
+
+		const target = findTarget(window.location.hash);
+		if (target) {
+			requestAnimationFrame(() => scrollTargetIntoRoot(target, "auto"));
+		}
+	};
+
+	document.addEventListener("astro:page-load", initArticleToc);
+	initArticleToc();
+</script>
 
 <style>
 	.article-toc {
@@ -70,6 +196,11 @@ const tocHeadings = headings.filter((heading) => heading.depth >= 2 && heading.d
 
 	a:hover {
 		color: var(--accent-dark);
+	}
+
+	a[aria-current="location"] {
+		color: var(--accent-dark);
+		font-weight: 700;
 	}
 
 	@media (max-width: 1180px) {

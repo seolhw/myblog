@@ -5,7 +5,7 @@ import ArticleToc from "../components/ArticleToc.astro";
 import WalineComments from "../components/WalineComments.astro";
 import PostMeta from "../components/PostMeta.astro";
 import SeriesDocsShell from "../components/SeriesDocsShell.astro";
-import BasePage from "./BasePage.astro";
+import SplitPage from "./SplitPage.astro";
 import { getSeriesBySlug } from "../data/series";
 
 type HeadingItem = {
@@ -35,7 +35,7 @@ const {
 const currentSeries = getSeriesBySlug({ slug: series });
 ---
 
-<BasePage title={title} description={description}>
+<SplitPage title={title} description={description}>
   <SeriesDocsShell
     title={currentSeries?.title || ""}
     posts={seriesPosts}
@@ -68,7 +68,7 @@ const currentSeries = getSeriesBySlug({ slug: series });
       <ArticleToc headings={headings} />
     </Fragment>
   </SeriesDocsShell>
-</BasePage>
+</SplitPage>
 
 <style>
   h2 {

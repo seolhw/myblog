@@ -1,0 +1,58 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: string;
+}
+
+const { title, description, lang = "zh-CN" } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <BaseHead title={title} description={description} />
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="split-page-shell">
+      <Header />
+      <div class="split-page-content">
+        <slot />
+      </div>
+      <Footer />
+    </div>
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .split-page-shell {
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .split-page-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+</style>

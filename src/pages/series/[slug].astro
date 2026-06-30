@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import SeriesDocsShell from "../../components/SeriesDocsShell.astro";
 import { SITE_TITLE } from "../../consts";
 import { SERIES_LIST, type SeriesConfig } from "../../data/series";
-import BasePage from "../../layouts/BasePage.astro";
+import SplitPage from "../../layouts/SplitPage.astro";
 import { getSeriesPosts, sortPosts } from "../../utils/blog";
 
 export async function getStaticPaths() {
@@ -34,7 +34,7 @@ const firstPost = posts[0];
 const latestPost = posts[posts.length - 1];
 ---
 
-<BasePage
+<SplitPage
   title={`${series.title} | ${SITE_TITLE}`}
   description={series.description}
 >
@@ -79,7 +79,7 @@ const latestPost = posts[posts.length - 1];
       </section>
     </article>
   </SeriesDocsShell>
-</BasePage>
+</SplitPage>
 <style>
   .back-link {
     display: inline-block;
