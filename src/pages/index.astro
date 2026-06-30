@@ -10,6 +10,25 @@ const allPosts = sortPosts({
 });
 const posts = allPosts.slice(0, 5);
 const seriesList = getSeriesSummaries({ posts: allPosts });
+const agentSeries = seriesList.find(
+  (series) => series.slug === "ai-agent-engineering-20",
+);
+const otherSeries = seriesList.filter((series) => series.slug !== agentSeries?.slug);
+
+const strengths = [
+  {
+    label: "Agent 工程化",
+    text: "关注工具调用、上下文工程、工作流编排、记忆、评估与可观测性，把 Agent 从 demo 推向可维护系统。",
+  },
+  {
+    label: "全栈交付经验",
+    text: "8 年 Node.js / React / TypeScript 经验，做过身份系统、权限模型、工作流、同步中心和审计日志。",
+  },
+  {
+    label: "产品化意识",
+    text: "习惯从用户场景、成本、稳定性和迭代节奏看 AI 应用，而不是只停在模型调用和提示词。",
+  },
+];
 ---
 
 <BasePage
@@ -18,45 +37,105 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
 >
   <main>
     <section class="hero">
-      <h2>你好，我是 huiwang</h2>
-      <p>
-        全栈软件工程师，AI Agent 工程师，主要关注 TypeScript、Node.js、React、
-        <strong>AI Agent</strong>
-        和独立产品构建。
+      <p class="eyebrow">AI Agent Engineer · TypeScript / Node.js / React</p>
+      <h1>把 AI Agent 做成可靠、可评估、可交付的产品系统。</h1>
+      <p class="hero-summary">
+        你好，我是 huiwang，一名正在求职 <strong>AI Agent 工程师</strong>
+        岗位的全栈工程师。我关心的不只是调通模型，而是 Agent
+        的工具链、上下文、状态、评估、可观测性和产品化落地。
       </p>
-      <p>这里主要记录 AI Agent、软件工程与产品实践。</p>
-      <p class="hero-links">
-        <a href="/blog">文章</a> / <a href="/series">系列</a> / <a href="/about"
-          >关于</a
-        > /&nbsp;
+      <div class="hero-actions" aria-label="主要链接">
+        <a class="primary-action" href="/series/ai-agent-engineering-20/"
+          >阅读 Agent 工程化系列</a
+        >
+        <a href="/about">查看履历</a>
         <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
-      </p>
-    </section>
-    <section class="series-section">
-      <div class="section-heading">
-        <h2>系列</h2>
-        <p>适合连续阅读的专题内容，按主题组织。</p>
       </div>
-      <ul class="series-list">
+      <dl class="signal-strip" aria-label="候选人概要">
+        <div>
+          <dt>8 年</dt>
+          <dd>全栈研发经验</dd>
+        </div>
+        <div>
+          <dt>20 讲</dt>
+          <dd>AI Agent 工程化写作</dd>
+        </div>
+        <div>
+          <dt>6 万+</dt>
+          <dd>VS Code 插件下载</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="focus-section">
+      <div class="section-heading">
+        <p class="section-kicker">Focus</p>
+        <h2>我能为 AI Agent 团队解决什么问题</h2>
+      </div>
+      <div class="strength-grid">
         {
-          seriesList.map((series) => (
-            <li>
-              <a class="series-link" href={`/series/${series.slug}/`}>
-                <p class="series-meta">
-                  {series.theme} · {series.postCount} 篇文章 · {series.status}
-                </p>
-                <h3>{series.title}</h3>
-                <p class="series-description">{series.description}</p>
-              </a>
-            </li>
+          strengths.map((item) => (
+            <section class="strength-item">
+              <h3>{item.label}</h3>
+              <p>{item.text}</p>
+            </section>
           ))
         }
-      </ul>
+      </div>
     </section>
+
+    {
+      agentSeries && (
+        <section class="featured-series">
+          <div class="section-heading">
+            <p class="section-kicker">Writing</p>
+            <h2>核心内容：AI Agent 工程化 20 讲</h2>
+            <p>
+              这是当前最能代表我求职方向的内容：从系统设计、工具调用、上下文工程到评估、部署和平台化，按工程问题组织。
+            </p>
+          </div>
+          <a class="featured-card" href={`/series/${agentSeries.slug}/`}>
+            <p class="series-meta">
+              {agentSeries.theme} · {agentSeries.postCount} 篇文章 · {agentSeries.status}
+            </p>
+            <h3>{agentSeries.title}</h3>
+            <p>{agentSeries.description}</p>
+            <span>进入系列</span>
+          </a>
+        </section>
+      )
+    }
+
+    {
+      otherSeries.length > 0 && (
+        <section class="series-section">
+          <div class="section-heading">
+            <p class="section-kicker">Library</p>
+            <h2>专题系列</h2>
+            <p>适合连续阅读的专题内容，按主题组织。</p>
+          </div>
+          <ul class="series-list">
+            {otherSeries.map((series) => (
+              <li>
+                <a class="series-link" href={`/series/${series.slug}/`}>
+                  <p class="series-meta">
+                    {series.theme} · {series.postCount} 篇文章 · {series.status}
+                  </p>
+                  <h3>{series.title}</h3>
+                  <p class="series-description">{series.description}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
     <section class="recent-posts">
       <div class="section-heading">
+        <p class="section-kicker">Notes</p>
         <h2>最近更新</h2>
-        <p>按时间倒序，先看标题和摘要，再决定是否进入正文。</p>
+        <p>按时间倒序记录 AI Agent、软件工程与产品思考。</p>
       </div>
       <ul>
         {posts.map((post) => <PostListItem post={post} titleAs="h3" />)}
@@ -68,60 +147,214 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
 
 <style>
   main {
-    width: min(calc(100% - 2rem), 860px);
+    width: min(calc(100% - 2rem), 1080px);
   }
   .hero {
     display: grid;
-    gap: 1rem;
-    padding: 1rem 0 0;
+    gap: 1.25rem;
+    padding: 2.5rem 0 1rem;
   }
 
-  .hero p {
-    max-width: 44rem;
+  .eyebrow,
+  .section-kicker {
+    margin: 0;
+    color: var(--accent-dark);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    /* max-width: 13em; */
+    margin: 0;
+    font-size: 40px;
+    line-height: 0.98;
+    color: rgb(var(--black));
+  }
+
+  .hero-summary {
     margin: 0;
     color: rgb(var(--gray-dark));
-    line-height: 1.9;
+    font-size: 1.16rem;
+    line-height: 1.85;
   }
-  .hero-links {
-    margin: 0.15rem 0 0;
-    font-size: 1rem;
-    color: rgb(var(--gray));
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
   }
-  .hero-links a {
+
+  .hero-actions a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.55rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgba(var(--gray), 0.22);
+    border-radius: 8px;
+    color: rgb(var(--gray-dark));
     text-decoration: none;
   }
+
+  .hero-actions a:hover {
+    border-color: rgba(138, 79, 50, 0.38);
+    color: var(--accent-dark);
+  }
+
+  .hero-actions .primary-action {
+    border-color: var(--accent-dark);
+    background: rgb(var(--black));
+    color: var(--page-bg);
+  }
+
+  .hero-actions .primary-action:hover {
+    background: var(--accent-dark);
+    color: var(--page-bg);
+  }
+
+  .signal-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    width: min(100%, 760px);
+    margin: 1rem 0 0;
+    border-top: 1px solid rgba(var(--gray), 0.18);
+    border-bottom: 1px solid rgba(var(--gray), 0.18);
+  }
+
+  .signal-strip div {
+    padding: 1rem 1.2rem;
+    border-right: 1px solid rgba(var(--gray), 0.18);
+  }
+
+  .signal-strip div:first-child {
+    padding-left: 0;
+  }
+
+  .signal-strip div:last-child {
+    border-right: none;
+  }
+
+  .signal-strip dt {
+    margin: 0 0 0.2rem;
+    color: rgb(var(--black));
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .signal-strip dd {
+    margin: 0;
+    color: rgb(var(--gray));
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .focus-section,
+  .featured-series,
   .series-section,
   .recent-posts {
-    margin-top: 3.5rem;
+    margin-top: 4.5rem;
   }
+
   .section-heading {
     margin-bottom: 1.1rem;
   }
+
   .section-heading h2 {
     margin: 0 0 0.35rem;
   }
+
   .section-heading p {
     margin: 0;
     color: rgb(var(--gray));
     font-size: 0.98rem;
   }
+
+  .section-heading .section-kicker {
+    margin-bottom: 0.55rem;
+    color: var(--accent-dark);
+    font-size: 0.78rem;
+  }
+
+  .strength-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid rgba(var(--gray), 0.18);
+    border-radius: 8px;
+    background: rgba(var(--gray), 0.18);
+  }
+
+  .strength-item {
+    min-height: 15rem;
+    padding: 1.35rem;
+    background: rgba(255, 250, 241, 0.64);
+  }
+
+  .strength-item h3 {
+    margin: 0 0 0.7rem;
+    font-size: 1.12rem;
+  }
+
+  .strength-item p {
+    margin: 0;
+    color: rgb(var(--gray-dark));
+    font-size: 0.98rem;
+    line-height: 1.8;
+  }
+
+  .featured-card {
+    display: block;
+    padding: 1.6rem;
+    border: 1px solid rgba(138, 79, 50, 0.26);
+    border-radius: 8px;
+    background: linear-gradient(135deg, #fffaf1 0%, #f0e2d1 100%);
+    color: rgb(var(--gray-dark));
+    text-decoration: none;
+  }
+
+  .featured-card h3 {
+    margin: 0 0 0.6rem;
+    font-size: 1.65rem;
+  }
+
+  .featured-card p {
+    max-width: 48rem;
+    margin: 0 0 0.8rem;
+    line-height: 1.85;
+  }
+
+  .featured-card span {
+    color: var(--accent-dark);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
   .series-list,
   .recent-posts ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    border-top: 1px solid rgb(var(--gray-light));
+    border-top: 1px solid rgba(var(--gray), 0.18);
   }
+
   .series-list li,
   .recent-posts li {
-    border-bottom: 1px solid rgb(var(--gray-light));
+    border-bottom: 1px solid rgba(var(--gray), 0.18);
   }
+
   .series-list li:last-child {
     border-bottom: none;
   }
+
   .recent-posts li:last-child {
     border-bottom: none;
   }
+
   .series-link,
   .post-link {
     display: block;
@@ -133,23 +366,64 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
     margin: 0 0 0.35rem;
     line-height: 1.35;
   }
+
   .series-link:hover h3,
   .post-link:hover h3 {
     color: var(--accent);
   }
+
   .series-meta,
   .series-description {
     margin: 0;
     color: rgb(var(--gray-dark));
     line-height: 1.85;
   }
+
+  .series-meta {
+    color: rgb(var(--gray));
+    font-size: 0.9rem;
+  }
+
   .read-more {
     margin-top: 1.1rem;
     font-size: 0.95rem;
   }
+
   @media (max-width: 760px) {
     main {
       width: min(calc(100% - 1.25rem), 860px);
+      padding-top: 2rem;
+    }
+
+    .hero {
+      padding-top: 1.25rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.35rem, 14vw, 3.6rem);
+    }
+
+    .hero-summary {
+      font-size: 1.02rem;
+    }
+
+    .signal-strip,
+    .strength-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .signal-strip div {
+      padding: 0.9rem 0;
+      border-right: none;
+      border-bottom: 1px solid rgba(var(--gray), 0.18);
+    }
+
+    .signal-strip div:last-child {
+      border-bottom: none;
+    }
+
+    .strength-item {
+      min-height: auto;
     }
   }
 </style>

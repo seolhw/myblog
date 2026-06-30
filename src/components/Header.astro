@@ -31,7 +31,7 @@ import { Image } from "astro:assets";
   header {
     margin: 0;
     padding: 0 1rem;
-    background: rgba(251, 250, 247, 92%);
+    background: rgba(247, 240, 228, 92%);
     border-bottom: 1px solid rgba(var(--gray-light), 80%);
     backdrop-filter: blur(16px);
     position: sticky;
@@ -44,6 +44,12 @@ import { Image } from "astro:assets";
     white-space: nowrap;
     display: flex;
     align-items: center;
+    gap: 0.55rem;
+  }
+
+  h2 img {
+    border: 1px solid rgba(var(--gray), 0.18);
+    border-radius: 999px;
   }
 
   h2 a,
@@ -55,7 +61,7 @@ import { Image } from "astro:assets";
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    width: min(100%, 960px);
+    width: min(100%, 1080px);
     min-height: 64px;
     margin: 0 auto;
   }
