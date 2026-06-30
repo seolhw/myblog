@@ -13,7 +13,9 @@ const seriesList = getSeriesSummaries({ posts: allPosts });
 const agentSeries = seriesList.find(
   (series) => series.slug === "ai-agent-engineering-20",
 );
-const otherSeries = seriesList.filter((series) => series.slug !== agentSeries?.slug);
+const otherSeries = seriesList.filter(
+  (series) => series.slug !== agentSeries?.slug,
+);
 
 const strengths = [
   {
@@ -31,10 +33,7 @@ const strengths = [
 ];
 ---
 
-<BasePage
-  title={SITE_TITLE}
-  description={SITE_DESCRIPTION}
->
+<BasePage title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <main>
     <section class="hero">
       <p class="eyebrow">AI Agent Engineer · TypeScript / Node.js / React</p>
@@ -96,7 +95,8 @@ const strengths = [
           </div>
           <a class="featured-card" href={`/series/${agentSeries.slug}/`}>
             <p class="series-meta">
-              {agentSeries.theme} · {agentSeries.postCount} 篇文章 · {agentSeries.status}
+              {agentSeries.theme} · {agentSeries.postCount} 篇文章 ·{" "}
+              {agentSeries.status}
             </p>
             <h3>{agentSeries.title}</h3>
             <p>{agentSeries.description}</p>
