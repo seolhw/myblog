@@ -32,6 +32,14 @@ body {
   line-height: 1.78;
   text-rendering: optimizeLegibility;
 }
+::selection {
+  background: #6f3f29;
+  color: #fff8ec;
+}
+::-moz-selection {
+  background: #6f3f29;
+  color: #fff8ec;
+}
 main {
   margin: auto;
 }

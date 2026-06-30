@@ -80,9 +80,14 @@ import BasePage from "../layouts/BasePage.astro";
 
 <style>
   main {
-    width: min(calc(100% - 2rem), 860px);
+    width: min(calc(100% - 2rem), 1080px);
   }
   h2 {
     margin-top: 1rem;
+  }
+  @media (max-width: 760px) {
+    main {
+      width: min(calc(100% - 1.25rem), 1080px);
+    }
   }
 </style>
